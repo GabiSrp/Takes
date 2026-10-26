@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= produto.nome %> | TAKES</title>
+
+    <link rel="stylesheet" href="/css/ver-roteiro.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="navbar">
+
+        <a href="/" class="logo">
+            TAKES
+            <i class="bi bi-camera-reels-fill"></i>
+        </a>
+
+        <a href="/roteiros" class="voltar">
+            <i class="bi bi-arrow-left"></i>
+            Voltar aos roteiros
+        </a>
+
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="container">
+
+        <div class="roteiro-container">
+
+            <!-- CAPA -->
+            <div class="capa-container">
+
+                <% if (produto.imagem) { %>
+
+                    <img
+                        src="/uploads/<%= encodeURIComponent(produto.imagem) %>"
+                        alt="Capa do roteiro <%= produto.nome %>"
+                        class="capa-roteiro">
+
+                <% } else { %>
+
+                    <div class="sem-capa">
+                        <i class="bi bi-camera-reels"></i>
+                        <p>TAKES ORIGINAL</p>
+                    </div>
+
+                <% } %>
+
+            </div>
+
+            <!-- INFORMAÇÕES -->
+            <section class="informacoes">
+
+                <span class="identificacao">
+                    TAKES ORIGINAL • ROTEIRO #<%= produto.id %>
+                </span>
+
+                <h1><%= produto.nome %></h1>
+
+                <!-- GÊNERO E FORMATO -->
+                <div class="etiquetas">
+
+                    <% if (produto.genero) { %>
+                        <span><%= produto.genero %></span>
+                    <% } %>
+
+                    <% if (produto.categoria) { %>
+                        <span>
+                            <%= produto.nome_categoria ||
+                                produto.categoria %>
+                        </span>
+                    <% } %>
+
+                </div>
+
+                <!-- DESCRIÇÃO -->
+                <div class="descricao">
+
+                    <h2>Sobre o roteiro</h2>
+
+                    <p>
+                        <%= produto.descricao ||
+                            'Este roteiro ainda não possui uma descrição.' %>
+                    </p>
+
+                </div>
+
+                <!-- VALOR E ESTOQUE -->
+                <div class="detalhes">
+
+                    <div>
+                        <small>Valor do roteiro</small>
+
+                        <strong>
+                            R$ <%= Number(produto.valor || 0)
+                                .toFixed(2).replace('.', ',') %>
+                        </strong>
+                    </div>
+
+                    <div>
+                        <small>Disponibilidade</small>
+
+                        <strong>
+                            <%= Number(produto.estoque || 0) > 0
+                                ? produto.estoque + ' disponível(is)'
+                                : 'Indisponível' %>
+                        </strong>
+                    </div>
+
+                </div>
+
+                <a href="/roteiros" class="btn-voltar">
+                    <i class="bi bi-arrow-left"></i>
+                    Continuar explorando
+                </a>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer>
+        TAKES © 2026 — Do roteiro ao resultado
+    </footer>
+
+</body>
+</html>

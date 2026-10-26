@@ -1,0 +1,350 @@
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background: #192238;
+}
+
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* TELA INICIAL */
+
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(17, 25, 44, 0.78),
+            rgba(28, 39, 61, 0.30)
+        ),
+        linear-gradient(
+            0deg,
+            rgba(15, 22, 38, 0.48),
+            transparent 65%
+        ),
+        url('/uploads/inicial.png');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    animation: entradaSite 1.2s ease-out both;
+}
+
+/* MENU SUPERIOR */
+
+.navbar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    gap: 18px;
+    padding: 30px 5%;
+
+    animation: aparecerDeCima .8s .2s ease-out both;
+}
+
+.nav-link,
+.nav-register {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 40px;
+    padding: 10px 15px;
+
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 30px;
+
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+
+    transition:
+        background .3s ease,
+        color .3s ease,
+        border-color .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+/* HOVER DOS BOTÕES DO MENU */
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, .17);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .15);
+}
+
+.nav-link:active {
+    transform: scale(.96);
+}
+
+/* LOGOTIPO */
+
+.logo {
+    justify-self: center;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: -1px;
+
+    transition:
+        transform .3s ease,
+        text-shadow .3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.07);
+    text-shadow: 0 0 20px rgba(255,255,255,.4);
+}
+
+/* REGISTRAR */
+
+.nav-register {
+    color: #222;
+    background: white;
+}
+
+.nav-register:hover {
+    background: #e5e5e5;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 25px rgba(255,255,255,.2);
+}
+
+.nav-register:active {
+    transform: scale(.96);
+}
+
+/* CONTEÚDO INICIAL */
+
+.hero-content {
+    margin-top: auto;
+    padding: 50px 5% 55px;
+}
+
+/* TEXTO PEQUENO */
+
+.eyebrow {
+    margin-bottom: 18px;
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    animation: aparecerDeBaixo .8s .35s ease-out both;
+}
+
+/* TÍTULO PRINCIPAL */
+
+.hero-content h1 {
+    font-size: clamp(60px, 10vw, 140px);
+    line-height: .95;
+    font-weight: 300;
+    letter-spacing: -.06em;
+
+    animation: aparecerDeBaixo 1s .45s ease-out both;
+}
+
+/* DESCRIÇÃO */
+
+.description {
+    max-width: 430px;
+    margin-top: 24px;
+    font-size: 15px;
+    line-height: 1.8;
+
+    animation: aparecerDeBaixo 1s .6s ease-out both;
+}
+
+/* BOTÃO COMEÇAR AGORA */
+
+.cta-button {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 14px 22px;
+
+    border: 1px solid white;
+    border-radius: 30px;
+
+    background: white;
+    color: #222;
+    text-decoration: none;
+    font-size: 13px;
+
+    animation: aparecerDeBaixo 1s .75s ease-out both;
+
+    transition:
+        background .3s ease,
+        color .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.cta-button:hover {
+    background: transparent;
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+.cta-button:active {
+    transform: scale(.96);
+}
+
+/* RODAPÉ */
+
+.hero-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 22px 5%;
+
+    border-top: 1px solid rgba(255,255,255,.25);
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+
+    animation: aparecerDeBaixo .8s .9s ease-out both;
+}
+
+/* ANIMAÇÕES DE ENTRADA */
+
+/* FUNDO SURGINDO */
+
+@keyframes entradaSite {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* MENU VINDO DE CIMA */
+
+@keyframes aparecerDeCima {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ELEMENTOS SURGINDO DE BAIXO */
+
+@keyframes aparecerDeBaixo {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ANIMAÇÃO OPCIONAL DE ELEMENTOS */
+
+@keyframes flutuar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+/* DESTAQUE DO FOCO */
+
+.nav-link:focus-visible,
+.nav-register:focus-visible,
+.cta-button:focus-visible,
+.logo:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 22px 5%;
+    }
+
+    .logo {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        margin-bottom: 8px;
+    }
+
+    .nav-link,
+    .nav-register {
+        padding: 9px 7px;
+        font-size: 11px;
+    }
+
+    .hero {
+        background-position: center;
+    }
+
+    .hero-content {
+        padding: 40px 6%;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(55px, 12vw, 85px);
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .hero-footer {
+        padding: 18px 6%;
+        font-size: 8px;
+        letter-spacing: .5px;
+    }
+}
+
+/* ACESSIBILIDADE */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

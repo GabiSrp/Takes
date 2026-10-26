@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Editar Perfil | TAKES</title>
+
+    <link rel="stylesheet" href="/css/perfil.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="/js/perfil.js" defer></script>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <a href="/" class="logo">
+            TAKES
+            <i class="bi bi-camera-reels-fill"></i>
+        </a>
+
+        <nav class="menu">
+            <a href="/roteiros" class="menu-item">
+                <i class="bi bi-house-door"></i>
+                <span>Início</span>
+            </a>
+
+            <a href="/roteiros" class="menu-item">
+                <i class="bi bi-star"></i>
+                <span>Favoritos</span>
+            </a>
+
+            <a href="/roteiros" class="menu-item">
+                <i class="bi bi-cart3"></i>
+                <span>Carrinho</span>
+            </a>
+
+            <a href="/perfil" class="menu-item active"
+               aria-current="page">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <form action="/roteiros"
+                  method="GET"
+                  class="search-container">
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar por roteiros, criadores ou palavras-chave..."
+                    aria-label="Buscar roteiros">
+            </form>
+
+            <div class="top-actions">
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="notificacoes"
+                    aria-label="Notificações">
+                    <i class="bi bi-bell"></i>
+                </button>
+
+                <div class="mini-profile">
+                    <img
+                        id="miniAvatar"
+                        src="/uploads/Hitchcock.jpg"
+                        alt="Sua foto de perfil">
+
+                    <span id="miniUsername">Buddy12</span>
+
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- TÍTULO -->
+        <section class="page-heading">
+            <h1>Editar perfil</h1>
+            <p>
+                Atualize suas informações e personalize sua conta.
+            </p>
+        </section>
+
+        <div class="profile-grid">
+
+            <!-- EDITOR -->
+            <section class="profile-editor card">
+
+                <div class="editor-columns">
+
+                    <!-- FOTO -->
+                    <div class="photo-column">
+
+                        <h2>Foto de perfil</h2>
+
+                        <p>
+                            Escolha uma imagem que represente você.
+                        </p>
+
+                        <div class="avatar-wrapper">
+
+                            <img
+                                id="avatarPreview"
+                                class="profile-avatar"
+                                src="/uploads/Hitchcock.jpg"
+                                alt="Foto de perfil atual">
+
+                            <label for="foto"
+                                   class="camera-badge"
+                                   title="Alterar foto">
+                                <i class="bi bi-camera"></i>
+                            </label>
+                        </div>
+
+                        <input
+                            type="file"
+                            id="foto"
+                            accept="image/jpeg,image/png,image/webp"
+                            hidden>
+
+                        <label for="foto" class="change-photo-btn">
+                            Alterar foto
+                        </label>
+
+                        <small>
+                            JPG, PNG ou WEBP. Máximo 5 MB.
+                        </small>
+
+                    </div>
+
+                    <!-- FORMULÁRIO -->
+                    <div class="form-column">
+
+                        <form id="profileForm">
+
+                            <div class="form-group">
+                                <label for="usuario">
+                                    Nome de usuário
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="usuario"
+                                    name="usuario"
+                                    value="Buddy12"
+                                    maxlength="30"
+                                    minlength="3"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nome">
+                                    Nome completo
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="nome"
+                                    name="nome"
+                                    value="João Silva"
+                                    maxlength="80"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">
+                                    E-mail
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value="joao@email.com"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+
+                                <div class="bio-wrapper">
+                                    <textarea
+                                        id="bio"
+                                        name="bio"
+                                        maxlength="160"
+                                        rows="4">Diretor em formação. Aqui compartilho meus roteiros e ideias sobre cinema.</textarea>
+
+                                    <div class="counter">
+                                        <span id="bioCount">0</span>/160
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Links (opcional)</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-instagram"></i>
+
+                                    <input
+                                        type="url"
+                                        id="instagram"
+                                        name="instagram"
+                                        placeholder="https://instagram.com/seuusuario">
+                                </div>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-youtube"></i>
+
+                                    <input
+                                        type="url"
+                                        id="youtube"
+                                        name="youtube"
+                                        placeholder="https://youtube.com/@seuusuario">
+                                </div>
+                            </div>
+
+                            <!-- BOTÕES -->
+                            <div class="form-actions">
+
+                                <button
+                                    type="button"
+                                    id="cancelar"
+                                    class="btn-outline">
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="btn-primary">
+                                    Salvar alterações
+                                </button>
+
+                            </div>
+
+                            <p id="mensagemPerfil"
+                               class="form-message"
+                               role="status"
+                               aria-live="polite"></p>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- LADO DIREITO -->
+            <aside class="right-panel">
+
+                <!-- PRÉVIA -->
+                <section class="preview-card card">
+
+                    <h3>Prévia do seu perfil</h3>
+
+                    <div class="preview-box">
+
+                        <div class="preview-header">
+
+                            <img
+                                id="previewAvatar"
+                                src="/uploads/Hitchcock.jpg"
+                                alt="Prévia da foto">
+
+                            <div class="preview-identity">
+                                <strong id="previewUser">
+                                    Buddy12
+                                </strong>
+
+                                <span id="previewHandle">
+                                    @buddy12
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <p id="previewBio">
+                            Diretor em formação. Aqui compartilho meus roteiros e ideias sobre cinema.
+                        </p>
+
+                        <div class="preview-socials">
+
+                            <a
+                                id="previewInstagram"
+                                href="#"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                                hidden>
+                                <i class="bi bi-instagram"></i>
+                            </a>
+
+                            <a
+                                id="previewYoutube"
+                                href="#"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube"
+                                hidden>
+                                <i class="bi bi-youtube"></i>
+                            </a>
+
+                        </div>
+
+                        <div class="preview-stats">
+
+                            <div>
+                                <strong>—</strong>
+                                <span>Roteiros</span>
+                            </div>
+
+                            <div>
+                                <strong>—</strong>
+                                <span>Seguidores</span>
+                            </div>
+
+                            <div>
+                                <strong>—</strong>
+                                <span>Seguindo</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- CONFIGURAÇÕES -->
+                <section class="settings-card card">
+
+                    <h3>Configurações da conta</h3>
+
+                    <button type="button"
+                            class="setting-item"
+                            data-setting="senha">
+                        <span>
+                            <i class="bi bi-lock"></i>
+                            Alterar senha
+                        </span>
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+
+                    <button type="button"
+                            class="setting-item"
+                            data-setting="notificacoes">
+                        <span>
+                            <i class="bi bi-bell"></i>
+                            Preferências de notificações
+                        </span>
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+
+                    <button type="button"
+                            class="setting-item"
+                            data-setting="idioma">
+                        <span>
+                            <i class="bi bi-globe"></i>
+                            Idioma
+                        </span>
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+
+                    <button type="button"
+                            class="setting-item danger"
+                            data-setting="excluir">
+                        <span>
+                            <i class="bi bi-trash"></i>
+                            Excluir conta
+                        </span>
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+
+                    <p id="mensagemConfiguracao"
+                       class="settings-message"
+                       role="status"
+                       aria-live="polite"></p>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
