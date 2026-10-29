@@ -5,10 +5,11 @@ const appAdmin = express.Router();
 const db = require('../banco/database');
 const upload = require('../util/imagens');
 
-// ==========================
-// PAINEL ADMIN E-COMMERCE
-// ==========================
+// ==========================================
+// TAKES - PAINEL ADMINISTRATIVO
+// ==========================================
 
+// Página principal do Admin
 appAdmin.get('/', (req, res) => {
     res.render('admin/index-admin');
 });
@@ -17,9 +18,9 @@ appAdmin.get('/index', (req, res) => {
     res.redirect('/admin');
 });
 
-// ==========================
+// ==========================================
 // LOGIN HITCHCOCK
-// ==========================
+// ==========================================
 
 appAdmin.post('/login', (req, res) => {
     const { usuario, senha } = req.body;
@@ -30,22 +31,22 @@ appAdmin.post('/login', (req, res) => {
         );
     }
 
-    // Redirecionamento provisório.
-    // Implementar autenticação futuramente.
+    // Login provisório, ainda sem autenticação real.
     return res.redirect('/roteiros');
 });
 
-// ==========================
+// ==========================================
 // CATEGORIAS / FORMATOS
-// ==========================
+// ==========================================
 
+// Listar categorias
 appAdmin.get('/categorias', (req, res) => {
     db.all(
         'SELECT * FROM categorias ORDER BY nome',
         [],
         (erro, categorias) => {
             if (erro) {
-                console.log(erro.message);
+                console.error(erro.message);
                 return res.status(500).send(
                     'Erro ao consultar formatos.'
                 );
@@ -58,13 +59,14 @@ appAdmin.get('/categorias', (req, res) => {
     );
 });
 
+// Abrir cadastro de categoria
 appAdmin.get('/categorias/form-cadastrar', (req, res) => {
     res.render('admin/categorias/cadastro');
 });
 
+// Salvar categoria
 appAdmin.post('/categorias/cadastrar', (req, res) => {
-    const nome = req.body.nome;
-    const descricao = req.body.descricao;
+    const { nome, descricao } = req.body;
 
     if (!nome || !nome.trim()) {
         return res.status(400).send(
@@ -75,23 +77,26 @@ appAdmin.post('/categorias/cadastrar', (req, res) => {
     db.run(
         `INSERT INTO categorias (nome, descricao)
          VALUES (?, ?)`,
-        [nome.trim(), descricao || ''],
+        [
+            nome.trim(),
+            descricao || ''
+        ],
         function (erro) {
             if (erro) {
-                console.log(erro.message);
+                console.error(erro.message);
                 return res.status(500).send(
                     'Erro ao cadastrar formato.'
                 );
             }
 
-            return res.redirect('/admin/categorias');
+            res.redirect('/admin/categorias');
         }
     );
 });
 
-// ==========================
-// PRODUTOS / ROTEIROS
-// ==========================
+// ==========================================
+// ROTEIROS - LISTAGEM
+// ==========================================
 
 appAdmin.get('/produtos', (req, res) => {
     db.all(
@@ -99,12 +104,12 @@ appAdmin.get('/produtos', (req, res) => {
                 categorias.nome AS nome_categoria
          FROM produtos
          LEFT JOIN categorias
-         ON produtos.categoria = categorias.nome
+             ON produtos.categoria = categorias.nome
          ORDER BY produtos.id DESC`,
         [],
         (erro, produtos) => {
             if (erro) {
-                console.log(erro.message);
+                console.error(erro.message);
                 return res.status(500).send(
                     'Erro ao consultar roteiros.'
                 );
@@ -117,13 +122,18 @@ appAdmin.get('/produtos', (req, res) => {
     );
 });
 
+// ==========================================
+// ROTEIROS - CADASTRO
+// ==========================================
+
+// Abrir formulário
 appAdmin.get('/produtos/form-cadastrar', (req, res) => {
     db.all(
         'SELECT * FROM categorias ORDER BY nome',
         [],
         (erro, categorias) => {
             if (erro) {
-                console.log(erro.message);
+                console.error(erro.message);
                 return res.status(500).send(
                     'Erro ao consultar formatos.'
                 );
@@ -136,6 +146,7 @@ appAdmin.get('/produtos/form-cadastrar', (req, res) => {
     );
 });
 
+// Cadastrar roteiro
 appAdmin.post(
     '/produtos/cadastrar',
     upload.single('imagem'),
@@ -144,7 +155,6 @@ appAdmin.post(
             nome,
             categoria,
             valor,
-            estoque,
             descricao,
             genero
         } = req.body;
@@ -153,29 +163,78 @@ appAdmin.post(
             ? req.file.filename
             : null;
 
+        // Validação do título
         if (!nome || !nome.trim()) {
             return res.status(400).send(
                 'Informe o nome do roteiro.'
             );
         }
 
+        // Validação do formato
+        if (!categoria || !categoria.trim()) {
+            return res.status(400).send(
+                'Selecione o formato do roteiro.'
+            );
+        }
+
+        // Validação do gênero
+        if (!genero || !genero.trim()) {
+            return res.status(400).send(
+                'Selecione o gênero do roteiro.'
+            );
+        }
+
+        // Validação da descrição
+        if (!descricao || !descricao.trim()) {
+            return res.status(400).send(
+                'Informe a sinopse do roteiro.'
+            );
+        }
+
+        // Validação do preço
+        const preco = Number(valor);
+
+        if (
+            valor === undefined ||
+            valor === null ||
+            String(valor).trim() === '' ||
+            !Number.isFinite(preco) ||
+            preco < 0
+        ) {
+            return res.status(400).send(
+                'Informe um preço válido.'
+            );
+        }
+
+        // Não existe mais campo de estoque.
+        // O SQLite utiliza o DEFAULT 0 da coluna
+        // estoque, caso ela ainda exista no banco.
+
         db.run(
-            `INSERT INTO produtos
-             (nome, categoria, valor, estoque,
-              descricao, imagem, genero)
-             VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO produtos (
+                nome,
+                categoria,
+                valor,
+                descricao,
+                imagem,
+                genero
+            )
+            VALUES (?, ?, ?, ?, ?, ?)`,
             [
                 nome.trim(),
-                categoria || '',
-                Number(valor) || 0,
-                Number(estoque) || 0,
-                descricao || '',
+                categoria.trim(),
+                preco,
+                descricao.trim(),
                 imagem,
-                genero || ''
+                genero.trim()
             ],
             function (erro) {
                 if (erro) {
-                    console.log(erro.message);
+                    console.error(
+                        'Erro ao cadastrar roteiro:',
+                        erro.message
+                    );
+
                     return res.status(500).send(
                         'Erro ao cadastrar roteiro.'
                     );
@@ -187,9 +246,9 @@ appAdmin.post(
     }
 );
 
-/* ==================================
-   EDITAR PRODUTOS / ROTEIROS
-================================== */
+// ==========================================
+// ROTEIROS - EDITAR
+// ==========================================
 
 // Abrir formulário de edição
 appAdmin.get('/produtos/editar/:id', (req, res) => {
@@ -201,11 +260,15 @@ appAdmin.get('/produtos/editar/:id', (req, res) => {
         (erro, produto) => {
             if (erro) {
                 console.error(erro.message);
-                return res.status(500).send('Erro ao buscar roteiro.');
+                return res.status(500).send(
+                    'Erro ao buscar roteiro.'
+                );
             }
 
             if (!produto) {
-                return res.status(404).send('Roteiro não encontrado.');
+                return res.status(404).send(
+                    'Roteiro não encontrado.'
+                );
             }
 
             db.all(
@@ -214,7 +277,9 @@ appAdmin.get('/produtos/editar/:id', (req, res) => {
                 (erro, categorias) => {
                     if (erro) {
                         console.error(erro.message);
-                        return res.status(500).send('Erro ao buscar categorias.');
+                        return res.status(500).send(
+                            'Erro ao buscar categorias.'
+                        );
                     }
 
                     res.render('admin/produtos/editar', {
@@ -227,23 +292,57 @@ appAdmin.get('/produtos/editar/:id', (req, res) => {
     );
 });
 
-// Salvar edição
+// Salvar alterações
 appAdmin.post(
     '/produtos/editar/:id',
     upload.single('imagem'),
     (req, res) => {
         const id = req.params.id;
+
         const {
             nome,
             categoria,
             valor,
-            estoque,
             descricao,
             genero
         } = req.body;
 
         if (!nome || !nome.trim()) {
-            return res.status(400).send('Informe o nome do roteiro.');
+            return res.status(400).send(
+                'Informe o nome do roteiro.'
+            );
+        }
+
+        if (!categoria || !categoria.trim()) {
+            return res.status(400).send(
+                'Selecione o formato do roteiro.'
+            );
+        }
+
+        if (!genero || !genero.trim()) {
+            return res.status(400).send(
+                'Selecione o gênero do roteiro.'
+            );
+        }
+
+        if (!descricao || !descricao.trim()) {
+            return res.status(400).send(
+                'Informe a sinopse do roteiro.'
+            );
+        }
+
+        const preco = Number(valor);
+
+        if (
+            valor === undefined ||
+            valor === null ||
+            String(valor).trim() === '' ||
+            !Number.isFinite(preco) ||
+            preco < 0
+        ) {
+            return res.status(400).send(
+                'Informe um preço válido.'
+            );
         }
 
         db.get(
@@ -252,13 +351,19 @@ appAdmin.post(
             (erro, produto) => {
                 if (erro) {
                     console.error(erro.message);
-                    return res.status(500).send('Erro ao consultar roteiro.');
+                    return res.status(500).send(
+                        'Erro ao consultar roteiro.'
+                    );
                 }
 
                 if (!produto) {
-                    return res.status(404).send('Roteiro não encontrado.');
+                    return res.status(404).send(
+                        'Roteiro não encontrado.'
+                    );
                 }
 
+                // Mantém a capa anterior
+                // quando nenhuma nova imagem é enviada.
                 const imagem = req.file
                     ? req.file.filename
                     : produto.imagem;
@@ -268,28 +373,32 @@ appAdmin.post(
                         nome = ?,
                         categoria = ?,
                         valor = ?,
-                        estoque = ?,
                         descricao = ?,
                         imagem = ?,
                         genero = ?
-                     WHERE id = ?`,
+                    WHERE id = ?`,
                     [
                         nome.trim(),
-                        categoria || '',
-                        Number(valor) || 0,
-                        Number(estoque) || 0,
-                        descricao || '',
+                        categoria.trim(),
+                        preco,
+                        descricao.trim(),
                         imagem,
-                        genero || '',
+                        genero.trim(),
                         id
                     ],
                     function (erro) {
                         if (erro) {
-                            console.error(erro.message);
-                            return res.status(500).send('Erro ao editar roteiro.');
+                            console.error(
+                                'Erro ao editar roteiro:',
+                                erro.message
+                            );
+
+                            return res.status(500).send(
+                                'Erro ao editar roteiro.'
+                            );
                         }
 
-                        res.redirect('/admin/produtos');
+                        return res.redirect('/admin/produtos');
                     }
                 );
             }
@@ -297,9 +406,9 @@ appAdmin.post(
     }
 );
 
-/* ==================================
-   EXCLUIR PRODUTOS / ROTEIROS
-================================== */
+// ==========================================
+// ROTEIROS - EXCLUIR
+// ==========================================
 
 appAdmin.post('/produtos/excluir/:id', (req, res) => {
     const id = req.params.id;
@@ -310,23 +419,27 @@ appAdmin.post('/produtos/excluir/:id', (req, res) => {
         function (erro) {
             if (erro) {
                 console.error(erro.message);
-                return res.status(500).send('Erro ao excluir roteiro.');
+                return res.status(500).send(
+                    'Erro ao excluir roteiro.'
+                );
             }
 
             if (this.changes === 0) {
-                return res.status(404).send('Roteiro não encontrado.');
+                return res.status(404).send(
+                    'Roteiro não encontrado.'
+                );
             }
 
-            res.redirect('/admin/produtos');
+            return res.redirect('/admin/produtos');
         }
     );
 });
 
-/* ==================================
-   EDITAR CATEGORIAS
-================================== */
+// ==========================================
+// CATEGORIAS - EDITAR
+// ==========================================
 
-// Abrir formulário
+// Abrir formulário de edição
 appAdmin.get('/categorias/editar/:id', (req, res) => {
     db.get(
         'SELECT * FROM categorias WHERE id = ?',
@@ -334,11 +447,15 @@ appAdmin.get('/categorias/editar/:id', (req, res) => {
         (erro, categoria) => {
             if (erro) {
                 console.error(erro.message);
-                return res.status(500).send('Erro ao buscar categoria.');
+                return res.status(500).send(
+                    'Erro ao buscar categoria.'
+                );
             }
 
             if (!categoria) {
-                return res.status(404).send('Categoria não encontrada.');
+                return res.status(404).send(
+                    'Categoria não encontrada.'
+                );
             }
 
             res.render('admin/categorias/editar', {
@@ -353,7 +470,9 @@ appAdmin.post('/categorias/editar/:id', (req, res) => {
     const { nome, descricao } = req.body;
 
     if (!nome || !nome.trim()) {
-        return res.status(400).send('Informe o nome da categoria.');
+        return res.status(400).send(
+            'Informe o nome da categoria.'
+        );
     }
 
     db.get(
@@ -361,43 +480,72 @@ appAdmin.post('/categorias/editar/:id', (req, res) => {
         [req.params.id],
         (erro, categoria) => {
             if (erro) {
-                return res.status(500).send('Erro ao buscar categoria.');
+                console.error(erro.message);
+                return res.status(500).send(
+                    'Erro ao buscar categoria.'
+                );
             }
 
             if (!categoria) {
-                return res.status(404).send('Categoria não encontrada.');
+                return res.status(404).send(
+                    'Categoria não encontrada.'
+                );
             }
 
             db.serialize(() => {
                 db.run('BEGIN TRANSACTION');
 
                 db.run(
-                    `UPDATE categorias SET nome = ?, descricao = ?
+                    `UPDATE categorias
+                     SET nome = ?, descricao = ?
                      WHERE id = ?`,
-                    [nome.trim(), descricao || '', req.params.id],
+                    [
+                        nome.trim(),
+                        descricao || '',
+                        req.params.id
+                    ],
                     function (erro) {
                         if (erro) {
                             db.run('ROLLBACK');
-                            return res.status(500).send('Erro ao editar categoria.');
+                            console.error(erro.message);
+
+                            return res.status(500).send(
+                                'Erro ao editar categoria.'
+                            );
                         }
 
-                        // Atualiza também os roteiros dessa categoria
+                        // Atualiza também os roteiros
+                        // vinculados ao nome antigo.
                         db.run(
-                            `UPDATE produtos SET categoria = ?
+                            `UPDATE produtos
+                             SET categoria = ?
                              WHERE categoria = ?`,
-                            [nome.trim(), categoria.nome],
+                            [
+                                nome.trim(),
+                                categoria.nome
+                            ],
                             function (erro) {
                                 if (erro) {
                                     db.run('ROLLBACK');
-                                    return res.status(500).send('Erro ao atualizar roteiros.');
+                                    console.error(erro.message);
+
+                                    return res.status(500).send(
+                                        'Erro ao atualizar roteiros.'
+                                    );
                                 }
 
-                                db.run('COMMIT', (erro) => {
+                                db.run('COMMIT', erro => {
                                     if (erro) {
-                                        return res.status(500).send('Erro ao salvar alterações.');
+                                        console.error(erro.message);
+
+                                        return res.status(500).send(
+                                            'Erro ao salvar alterações.'
+                                        );
                                     }
 
-                                    res.redirect('/admin/categorias');
+                                    return res.redirect(
+                                        '/admin/categorias'
+                                    );
                                 });
                             }
                         );
@@ -408,9 +556,9 @@ appAdmin.post('/categorias/editar/:id', (req, res) => {
     );
 });
 
-/* ==================================
-   EXCLUIR CATEGORIAS
-================================== */
+// ==========================================
+// CATEGORIAS - EXCLUIR
+// ==========================================
 
 appAdmin.post('/categorias/excluir/:id', (req, res) => {
     const id = req.params.id;
@@ -420,20 +568,32 @@ appAdmin.post('/categorias/excluir/:id', (req, res) => {
         [id],
         (erro, categoria) => {
             if (erro) {
-                return res.status(500).send('Erro ao buscar categoria.');
+                console.error(erro.message);
+                return res.status(500).send(
+                    'Erro ao buscar categoria.'
+                );
             }
 
             if (!categoria) {
-                return res.status(404).send('Categoria não encontrada.');
+                return res.status(404).send(
+                    'Categoria não encontrada.'
+                );
             }
 
-            // Impede apagar categorias utilizadas por roteiros
+            // Impede a exclusão de categorias
+            // que ainda possuem roteiros vinculados.
             db.get(
-                'SELECT COUNT(*) AS total FROM produtos WHERE categoria = ?',
+                `SELECT COUNT(*) AS total
+                 FROM produtos
+                 WHERE categoria = ?`,
                 [categoria.nome],
                 (erro, resultado) => {
                     if (erro) {
-                        return res.status(500).send('Erro ao verificar roteiros.');
+                        console.error(erro.message);
+
+                        return res.status(500).send(
+                            'Erro ao verificar roteiros.'
+                        );
                     }
 
                     if (resultado.total > 0) {
@@ -448,10 +608,16 @@ appAdmin.post('/categorias/excluir/:id', (req, res) => {
                         [id],
                         function (erro) {
                             if (erro) {
-                                return res.status(500).send('Erro ao excluir categoria.');
+                                console.error(erro.message);
+
+                                return res.status(500).send(
+                                    'Erro ao excluir categoria.'
+                                );
                             }
 
-                            res.redirect('/admin/categorias');
+                            return res.redirect(
+                                '/admin/categorias'
+                            );
                         }
                     );
                 }
@@ -459,5 +625,9 @@ appAdmin.post('/categorias/excluir/:id', (req, res) => {
         }
     );
 });
+
+// ==========================================
+// EXPORTAR ROTAS
+// ==========================================
 
 module.exports = appAdmin;
