@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Favoritos | TAKES</title>
+
+    <link rel="stylesheet" href="/css/favoritos.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="/js/favoritos.js" defer></script>
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <a href="/" class="logo">
+            TAKES
+            <i class="bi bi-camera-reels-fill"></i>
+        </a>
+
+        <nav class="menu">
+            <a href="/roteiros" class="menu-item">
+                <i class="bi bi-house-door"></i>
+                <span>Início</span>
+            </a>
+
+            <a href="/perfil" class="menu-item">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
+
+            <a href="/favoritos" class="menu-item active" aria-current="page">
+                <i class="bi bi-star"></i>
+                <span>Favoritos</span>
+            </a>
+
+            <a href="#carrinho" class="menu-item" id="menuCarrinho">
+                <i class="bi bi-cart3"></i>
+                <span>Carrinho</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div class="search-container">
+                <i class="bi bi-search"></i>
+                <input
+                    type="search"
+                    id="pesquisaFavoritos"
+                    placeholder="Buscar por roteiros, criadores ou palavras-chave..."
+                    aria-label="Buscar favoritos">
+            </div>
+
+            <div class="top-actions">
+                <a href="/perfil"
+                   class="profile-shortcut"
+                   aria-label="Editar perfil">
+                    <i class="bi bi-person-circle"></i>
+                </a>
+            </div>
+
+        </header>
+
+        <section class="page-heading">
+            <h1>Favoritos</h1>
+            <p>Seus roteiros favoritos, reunidos em um só lugar.</p>
+        </section>
+
+        <!-- FILTROS -->
+        <div class="toolbar">
+
+            <div class="filters">
+                <button type="button"
+                        class="filter-btn active"
+                        data-filter="todos">
+                    Todos
+                    <span id="totalFavoritos">0</span>
+                </button>
+
+                <button type="button"
+                        class="filter-btn"
+                        data-filter="longa">
+                    Longas-metragens
+                </button>
+
+                <button type="button"
+                        class="filter-btn"
+                        data-filter="curta">
+                    Curtas-metragens
+                </button>
+            </div>
+
+            <div class="sort-container">
+                <label for="ordenacao">Ordenar por:</label>
+
+                <select id="ordenacao">
+                    <option value="recentes">Salvos recentemente</option>
+                    <option value="antigos">Salvos há mais tempo</option>
+                    <option value="titulo">Título A–Z</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- CARDS -->
+        <section class="favorites-grid" id="favoritesGrid">
+
+            <% produtos.forEach(produto => { %>
+
+                <article
+                    class="favorite-card"
+                    data-id="<%= produto.id %>"
+                    data-formato="<%= produto.categoria || '' %>"
+                    data-titulo="<%= produto.nome %>">
+
+                    <div class="card-cover">
+
+                        <a href="/roteiros/<%= produto.id %>"
+                           aria-label="Ver <%= produto.nome %>">
+
+                            <% if (produto.imagem) { %>
+                                <img
+                                    src="/uploads/<%= encodeURIComponent(produto.imagem) %>"
+                                    alt="Capa de <%= produto.nome %>"
+                                    loading="lazy">
+                            <% } else { %>
+                                <div class="no-cover">
+                                    <i class="bi bi-camera-reels"></i>
+                                    <span>TAKES ORIGINAL</span>
+                                </div>
+                            <% } %>
+                        </a>
+
+                        <button
+                            type="button"
+                            class="favorite-star"
+                            data-favorite-id="<%= produto.id %>"
+                            aria-label="Remover dos favoritos"
+                            aria-pressed="true"
+                            title="Remover dos favoritos">
+                            <i class="bi bi-star-fill"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="card-content">
+
+                        <h2><%= produto.nome %></h2>
+
+                        <p class="card-author">
+                            Roteiro TAKES
+                        </p>
+
+                        <p class="card-description">
+                            <%= produto.descricao || 'Este roteiro ainda não possui uma sinopse.' %>
+                        </p>
+
+                        <div class="card-tags">
+
+                            <% if (produto.genero) { %>
+                                <span class="genre">
+                                    <%= produto.genero %>
+                                </span>
+                            <% } %>
+
+                            <span class="format">
+                                <%= produto.nome_categoria || produto.categoria || 'Sem formato' %>
+                            </span>
+
+                        </div>
+
+                        <div class="card-bottom">
+                            <small class="saved-date" data-saved-date>
+                                Salvo recentemente
+                            </small>
+
+                            <a
+                                href="/roteiros/<%= produto.id %>"
+                                class="view-link">
+                                Ver roteiro
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </article>
+
+            <% }); %>
+
+        </section>
+
+        <!-- MENSAGEM QUANDO NÃO HOUVER FAVORITOS -->
+        <div class="empty-state" id="emptyState" hidden>
+            <i class="bi bi-star"></i>
+            <h2>Nenhum favorito encontrado</h2>
+
+            <p id="emptyMessage">
+                Você ainda não salvou nenhum roteiro.
+            </p>
+
+            <a href="/roteiros" class="explore-button">
+                Explorar roteiros
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <p class="results-count"
+           id="resultsCount"
+           aria-live="polite"></p>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -50,6 +50,34 @@ app.get('/roteiros', (req, res) => {
     });
 });
 
+
+app.get('/favoritos', (req, res) => {
+    const sql = `
+        SELECT
+            produtos.*,
+            categorias.nome AS nome_categoria
+        FROM produtos
+        LEFT JOIN categorias
+            ON produtos.categoria = categorias.nome
+        ORDER BY produtos.id DESC
+    `;
+
+    db.all(sql, [], (erro, produtos) => {
+        if (erro) {
+            console.error(
+                'Erro ao buscar favoritos:',
+                erro.message
+            );
+
+            return res.status(500).send(
+                'Erro ao carregar os favoritos.'
+            );
+        }
+
+        res.render('favoritos', { produtos });
+    });
+});
+
 // Visualizar um roteiro
 app.get('/roteiros/:id', (req, res) => {
     const id = Number(req.params.id);

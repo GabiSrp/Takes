@@ -365,3 +365,38 @@ html, body {
         width: 100%;
     }
 }
+
+
+/* BOTÃO ADICIONAR AO CARRINHO */
+
+.cart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 11px 15px;
+    margin-top: 12px;
+
+    background: #17243c;
+    color: #6b9cfa;
+
+    border: 1px solid #345281;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.cart-button:hover {
+    background: #254373;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.cart-button i {
+    font-size: 17px;
+}

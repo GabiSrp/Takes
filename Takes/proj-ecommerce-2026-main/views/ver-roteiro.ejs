@@ -3,134 +3,790 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><%= produto.nome %> | TAKES</title>
 
-    <link rel="stylesheet" href="/css/ver-roteiro.css">
-
+    <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        /* CONFIGURAÇÃO DA PÁGINA */
+
+        body {
+            margin: 0;
+            background: #050a0c;
+            color: #f5f5f7;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 220px minmax(0, 1fr);
+            min-height: 100vh;
+        }
+
+        .layout > .main-content.detalhes-main {
+            width: 100%;
+            min-width: 0;
+            max-width: none;
+            margin: 0;
+            padding: 18px 55px 70px;
+            background: #050a0c;
+        }
+
+        /* CABEÇALHO */
+
+        .detalhes-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 54px;
+        }
+
+        .detalhes-topbar .search-container {
+            width: 100%;
+            max-width: 610px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 20px;
+            background: #10191e;
+            border: 1px solid #28343c;
+            border-radius: 30px;
+            color: #afbdca;
+        }
+
+        .detalhes-topbar .search-container input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f5f5f7;
+            font-size: 13px;
+        }
+
+        .detalhes-topbar .search-container input::placeholder {
+            color: #98a7b6;
+        }
+
+        .detalhes-topbar .search-container i {
+            font-size: 20px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .top-actions a {
+            color: #aebdcb;
+            font-size: 19px;
+            text-decoration: none;
+        }
+
+        .top-actions .profile-link {
+            display: flex;
+            width: 42px;
+            height: 42px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #3979fa;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        /* GRID PRINCIPAL */
+
+        .roteiro-detalhes {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 1.85fr)
+                minmax(300px, 1fr);
+            gap: 45px;
+            align-items: start;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .detalhes-esquerda,
+        .detalhes-direita {
+            min-width: 0;
+        }
+
+        /* TÍTULO */
+
+        .destaque-label {
+            display: block;
+            color: #4f93ff;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 25px 0 13px;
+            letter-spacing: .3px;
+        }
+
+        .detalhes-esquerda h1 {
+            color: #f6f6f7;
+            font-size: clamp(34px, 3.3vw, 52px);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -1.5px;
+            overflow-wrap: anywhere;
+            margin: 0 0 18px;
+        }
+
+        .autor-roteiro {
+            color: #b1bfcd;
+            font-size: 21px;
+            margin: 0 0 24px;
+        }
+
+        .resumo-roteiro {
+            color: #a8b5c3;
+            font-size: 17px;
+            line-height: 1.75;
+            max-width: 750px;
+            margin-bottom: 30px;
+            overflow-wrap: anywhere;
+        }
+
+        /* INFORMAÇÕES HORIZONTAIS */
+
+        .metadados {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            padding: 27px 0;
+            margin-bottom: 38px;
+            border-top: 1px solid #2c353b;
+        }
+
+        .metadado {
+            min-width: 0;
+            padding: 0 19px;
+            border-right: 1px solid #2c353b;
+        }
+
+        .metadado:first-child {
+            padding-left: 0;
+        }
+
+        .metadado:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .metadado small {
+            display: block;
+            margin-bottom: 8px;
+            color: #8494a4;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .metadado strong {
+            display: block;
+            color: #f1f3f5;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        /* CARDS DE INFORMAÇÕES */
+
+        .cards-informacoes {
+            display: grid;
+            grid-template-columns: minmax(0, 1.7fr) minmax(230px, 1fr);
+            gap: 14px;
+        }
+
+        .info-box {
+            min-width: 0;
+            min-height: 225px;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #24313a;
+            background: #0a1115;
+        }
+
+        .info-box h2 {
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0 0 20px;
+            color: #f3f5f7;
+        }
+
+        .info-box > p {
+            font-size: 12px;
+            line-height: 1.9;
+            color: #aebac6;
+            overflow-wrap: anywhere;
+        }
+
+        .linha-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            margin-bottom: 15px;
+        }
+
+        .linha-info > i {
+            font-size: 19px;
+            color: #c3d0dc;
+            flex-shrink: 0;
+        }
+
+        .linha-info div {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .linha-info span {
+            color: #a6b3bf;
+            font-size: 12px;
+        }
+
+        .linha-info strong {
+            color: #e9eef2;
+            font-weight: 400;
+            font-size: 12px;
+        }
+
+        /* CAPA À DIREITA */
+
+        .detalhes-direita {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            padding-top: 0;
+        }
+
+        .capa-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            aspect-ratio: 0.735;
+            max-height: 570px;
+            overflow: hidden;
+            border: 1px solid #334653;
+            border-radius: 15px;
+            background: #0d1520;
+        }
+
+        .capa-container img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .capa-vazia {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #0b1421, #1d385b);
+            text-align: center;
+        }
+
+        .capa-vazia i {
+            font-size: 55px;
+            color: #7daafa;
+        }
+
+        .capa-vazia span {
+            letter-spacing: 3px;
+            color: #b0c9ea;
+            font-size: 11px;
+        }
+
+        .capa-vazia strong {
+            font-size: 23px;
+            overflow-wrap: anywhere;
+        }
+
+        /* BOTÕES DA DIREITA */
+
+        .botao-principal,
+        .botao-secundario {
+            width: 100%;
+            min-height: 58px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 18px;
+            border-radius: 13px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .2s, border-color .2s;
+        }
+
+        .botao-principal {
+            position: relative;
+            background: #3979fa;
+            color: white;
+            border: 1px solid #6598ff;
+        }
+
+        .botao-principal:hover {
+            background: #2769ec;
+        }
+
+        .botao-principal .seta {
+            position: absolute;
+            right: 19px;
+        }
+
+        .botao-secundario {
+            background: transparent;
+            color: #e1e8ee;
+            border: 1px solid #435866;
+        }
+
+        .botao-secundario:hover {
+            background: #14222b;
+            border-color: #6a9dff;
+        }
+
+        .botao-secundario i {
+            font-size: 19px;
+        }
+
+        .botao-secundario.favoritado {
+            color: #80acff;
+            border-color: #568bfa;
+            background: #11233b;
+        }
+
+        /* RESPONSIVIDADE */
+
+        @media (max-width: 1350px) {
+            .layout > .main-content.detalhes-main {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .roteiro-detalhes {
+                gap: 24px;
+            }
+
+            .cards-informacoes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .roteiro-detalhes {
+                grid-template-columns: minmax(0, 1fr) 300px;
+            }
+
+            .metadados {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                row-gap: 22px;
+            }
+
+            .metadado:nth-child(2) {
+                border-right: 0;
+            }
+
+            .metadado:nth-child(3) {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 950px) {
+            .roteiro-detalhes {
+                grid-template-columns: 1fr;
+            }
+
+            .detalhes-direita {
+                width: 100%;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+
+            .destaque-label {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .layout > .main-content.detalhes-main {
+                grid-column: 1;
+                padding: 20px 18px 50px;
+            }
+
+            .detalhes-topbar {
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .detalhes-esquerda h1 {
+                font-size: 32px;
+            }
+
+            .autor-roteiro {
+                font-size: 17px;
+            }
+
+            .resumo-roteiro {
+                font-size: 14px;
+            }
+
+            .metadado {
+                padding: 0 10px;
+            }
+
+            .info-box {
+                padding: 19px;
+            }
+
+            .top-actions {
+                gap: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- CABEÇALHO -->
-    <header class="navbar">
+<div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
 
         <a href="/" class="logo">
             TAKES
             <i class="bi bi-camera-reels-fill"></i>
         </a>
 
-        <a href="/roteiros" class="voltar">
-            <i class="bi bi-arrow-left"></i>
-            Voltar aos roteiros
-        </a>
+        <nav class="menu">
 
-    </header>
+            <a href="/roteiros" class="menu-item active">
+                <i class="bi bi-house-door"></i>
+                <span>Início</span>
+            </a>
 
-    <!-- CONTEÚDO -->
-    <main class="container">
+            <a href="/perfil" class="menu-item">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
 
-        <div class="roteiro-container">
+            <a href="/favoritos" class="menu-item">
+                <i class="bi bi-star"></i>
+                <span>Favoritos</span>
+            </a>
 
-            <!-- CAPA -->
-            <div class="capa-container">
+            <a href="#carrinho" class="menu-item">
+                <i class="bi bi-cart3"></i>
+                <span>Carrinho</span>
+            </a>
 
-                <% if (produto.imagem) { %>
+        </nav>
+    </aside>
 
-                    <img
-                        src="/uploads/<%= encodeURIComponent(produto.imagem) %>"
-                        alt="Capa do roteiro <%= produto.nome %>"
-                        class="capa-roteiro">
+    <!-- DETALHES -->
+    <main class="main-content detalhes-main">
 
-                <% } else { %>
+        <!-- CABEÇALHO -->
+        <header class="topbar detalhes-topbar">
 
-                    <div class="sem-capa">
-                        <i class="bi bi-camera-reels"></i>
-                        <p>TAKES ORIGINAL</p>
-                    </div>
+            <form action="/roteiros"
+                  method="GET"
+                  class="search-container">
 
-                <% } %>
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar por roteiros, criadores ou palavras-chave...">
+
+            </form>
+
+            <div class="top-actions">
+
+                <a href="/perfil" aria-label="Meu perfil">
+                    <i class="bi bi-bell"></i>
+                </a>
+
+                <a href="/perfil"
+                   class="profile-link"
+                   aria-label="Editar perfil">
+                    <i class="bi bi-person-fill"></i>
+                </a>
 
             </div>
 
-            <!-- INFORMAÇÕES -->
-            <section class="informacoes">
+        </header>
 
-                <span class="identificacao">
-                    TAKES ORIGINAL • ROTEIRO #<%= produto.id %>
+        <!-- DUAS COLUNAS -->
+        <div class="roteiro-detalhes">
+
+            <!-- LADO ESQUERDO -->
+            <section class="detalhes-esquerda">
+
+                <span class="destaque-label">
+                    ROTEIRO EM DESTAQUE
                 </span>
 
                 <h1><%= produto.nome %></h1>
 
-                <!-- GÊNERO E FORMATO -->
-                <div class="etiquetas">
+                <p class="autor-roteiro">
+                    TAKES Creator
+                </p>
 
-                    <% if (produto.genero) { %>
-                        <span><%= produto.genero %></span>
-                    <% } %>
+                <p class="resumo-roteiro">
+                    <%= produto.descricao ||
+                        'Conheça este projeto e descubra uma nova história.' %>
+                </p>
 
-                    <% if (produto.categoria) { %>
-                        <span>
+                <!-- METADADOS -->
+                <div class="metadados">
+
+                    <div class="metadado">
+                        <small>FORMATO</small>
+                        <strong>
                             <%= produto.nome_categoria ||
-                                produto.categoria %>
-                        </span>
-                    <% } %>
-
-                </div>
-
-                <!-- DESCRIÇÃO -->
-                <div class="descricao">
-
-                    <h2>Sobre o roteiro</h2>
-
-                    <p>
-                        <%= produto.descricao ||
-                            'Este roteiro ainda não possui uma descrição.' %>
-                    </p>
-
-                </div>
-
-                <!-- VALOR E ESTOQUE -->
-                <div class="detalhes">
-
-                    <div>
-                        <small>Valor do roteiro</small>
-
-                        <strong>
-                            R$ <%= Number(produto.valor || 0)
-                                .toFixed(2).replace('.', ',') %>
+                                produto.categoria ||
+                                'Não informado' %>
                         </strong>
                     </div>
 
-                    <div>
-                        <small>Disponibilidade</small>
-
+                    <div class="metadado">
+                        <small>GÊNERO</small>
                         <strong>
-                            <%= Number(produto.estoque || 0) > 0
-                                ? produto.estoque + ' disponível(is)'
-                                : 'Indisponível' %>
+                            <%= produto.genero ||
+                                'Não informado' %>
+                        </strong>
+                    </div>
+
+                    <div class="metadado">
+                        <small>ESTÁGIO DO PROJETO</small>
+                        <strong>
+                            <%= produto.estagio ||
+                                'Não informado' %>
+                        </strong>
+                    </div>
+
+                    <div class="metadado">
+                        <small>OBJETIVO</small>
+                        <strong>
+                            <%= produto.objetivo ||
+                                'Não informado' %>
                         </strong>
                     </div>
 
                 </div>
 
-                <a href="/roteiros" class="btn-voltar">
-                    <i class="bi bi-arrow-left"></i>
-                    Continuar explorando
-                </a>
+                <!-- CARDS -->
+                <div class="cards-informacoes">
+
+                    <section class="info-box" id="descricao">
+
+                        <h2>Descrição</h2>
+
+                        <p>
+                            <%= produto.descricao ||
+                                'Este roteiro ainda não possui uma descrição cadastrada.' %>
+                        </p>
+
+                    </section>
+
+                    <section class="info-box">
+
+                        <h2>Mais informações</h2>
+
+                        <div class="linha-info">
+                            <i class="bi bi-clock"></i>
+                            <div>
+                                <span>Duração estimada</span>
+                                <strong>
+                                    <%= produto.duracao ||
+                                        'Não informada' %>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="linha-info">
+                            <i class="bi bi-people"></i>
+                            <div>
+                                <span>Público-alvo</span>
+                                <strong>
+                                    <%= produto.publico_alvo ||
+                                        'Não informado' %>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="linha-info">
+                            <i class="bi bi-file-earmark-text"></i>
+                            <div>
+                                <span>Status</span>
+                                <strong>
+                                    <%= produto.estagio ||
+                                        'Projeto cadastrado' %>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="linha-info">
+                            <i class="bi bi-currency-dollar"></i>
+                            <div>
+                                <span>Valor do roteiro</span>
+                                <strong>
+                                    R$ <%= Number(produto.valor || 0)
+                                        .toLocaleString('pt-BR', {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        }) %>
+                                </strong>
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
 
             </section>
+
+            <!-- LADO DIREITO -->
+            <aside class="detalhes-direita">
+
+                <div class="capa-container">
+
+                    <% if (produto.imagem) { %>
+
+                        <img
+                            src="/uploads/<%= encodeURIComponent(produto.imagem) %>"
+                            alt="Capa de <%= produto.nome %>">
+
+                    <% } else { %>
+
+                        <div class="capa-vazia">
+                            <i class="bi bi-camera-reels"></i>
+                            <span>TAKES ORIGINAL</span>
+                            <strong><%= produto.nome %></strong>
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+                <!-- VER ROTEIRO -->
+                <a href="#descricao" class="botao-principal">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Ver roteiro</span>
+                    <i class="bi bi-chevron-right seta"></i>
+                </a>
+
+                <!-- FAVORITOS -->
+                <button
+                    type="button"
+                    id="botaoFavorito"
+                    class="botao-secundario"
+                    data-id="<%= produto.id %>"
+                    aria-pressed="false">
+
+                    <i id="iconeFavorito" class="bi bi-heart"></i>
+
+                    <span id="textoFavorito">
+                        Adicionar aos favoritos
+                    </span>
+                </button>
+
+                <!-- CARRINHO VISUAL -->
+                <button type="button" class="botao-secundario">
+                    <i class="bi bi-cart-plus"></i>
+                    <span>Adicionar ao carrinho</span>
+                </button>
+
+            </aside>
 
         </div>
 
     </main>
 
-    <footer>
-        TAKES © 2026 — Do roteiro ao resultado
-    </footer>
+</div>
+
+<script>
+    const botaoFavorito = document.getElementById('botaoFavorito');
+    const iconeFavorito = document.getElementById('iconeFavorito');
+    const textoFavorito = document.getElementById('textoFavorito');
+    const roteiroId = botaoFavorito.dataset.id;
+    const CHAVE = 'takes_favoritos_v1';
+
+    function obterFavoritos() {
+        try {
+            const dados = JSON.parse(
+                localStorage.getItem(CHAVE) || '{}'
+            );
+
+            return dados && typeof dados === 'object' &&
+                !Array.isArray(dados) ? dados : {};
+        } catch {
+            return {};
+        }
+    }
+
+    function atualizarBotao() {
+        const favoritos = obterFavoritos();
+        const ativo = Boolean(favoritos[roteiroId]);
+
+        botaoFavorito.classList.toggle('favoritado', ativo);
+        botaoFavorito.setAttribute('aria-pressed', String(ativo));
+
+        iconeFavorito.className = ativo
+            ? 'bi bi-heart-fill'
+            : 'bi bi-heart';
+
+        textoFavorito.textContent = ativo
+            ? 'Remover dos favoritos'
+            : 'Adicionar aos favoritos';
+    }
+
+    botaoFavorito.addEventListener('click', () => {
+        const favoritos = obterFavoritos();
+
+        if (favoritos[roteiroId]) {
+            delete favoritos[roteiroId];
+        } else {
+            favoritos[roteiroId] = Date.now();
+        }
+
+        try {
+            localStorage.setItem(CHAVE, JSON.stringify(favoritos));
+            atualizarBotao();
+        } catch (erro) {
+            console.error(erro);
+            alert('Não foi possível salvar o favorito.');
+        }
+    });
+
+    window.addEventListener('storage', atualizarBotao);
+    atualizarBotao();
+</script>
 
 </body>
 </html>
