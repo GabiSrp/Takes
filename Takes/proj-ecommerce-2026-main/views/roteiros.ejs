@@ -1,20 +1,29 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Explorar Roteiros | TAKES</title>
 
     <link rel="stylesheet" href="/css/roteiros.css">
     <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
 
     <style>
-        /* Ajustes específicos da página de roteiros */
+        /* =====================================
+           CONFIGURAÇÃO DA PÁGINA
+        ===================================== */
 
         .layout:has(> .right-sidebar) {
-            grid-template-columns: 220px minmax(0, 1fr) 300px !important;
+            grid-template-columns:
+                220px minmax(0, 1fr) 300px !important;
         }
 
         .layout > .right-sidebar {
@@ -22,27 +31,47 @@
             min-width: 0;
         }
 
+        /* =====================================
+           CARDS DOS ROTEIROS
+        ===================================== */
+
         .roteiro-card {
             position: relative;
         }
+
+        .roteiro-card[hidden] {
+            display: none !important;
+        }
+
+        /* =====================================
+           BOTÃO FAVORITOS
+        ===================================== */
 
         .botao-favorito {
             position: absolute;
             top: 25px;
             right: 25px;
             z-index: 5;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             width: 42px;
             height: 42px;
+
             background: #151b29;
             color: #6b9cfa;
+
             border: 1px solid #38455b;
             border-radius: 50%;
+
             font-size: 20px;
             cursor: pointer;
-            transition: background .25s ease, transform .25s ease;
+
+            transition:
+                background .25s ease,
+                transform .25s ease;
         }
 
         .botao-favorito:hover {
@@ -54,24 +83,31 @@
             background: #182c50;
         }
 
-        .roteiro-card[hidden] {
-            display: none !important;
-        }
+        /* =====================================
+           BOTÃO DO CARRINHO
+        ===================================== */
 
         .cart-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
             gap: 8px;
             padding: 11px 15px;
+
             background: #17243c;
             color: #6b9cfa;
+
             border: 1px solid #345281;
             border-radius: 10px;
+
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: background .25s ease, transform .25s ease;
+
+            transition:
+                background .25s ease,
+                transform .25s ease;
         }
 
         .cart-button:hover {
@@ -84,6 +120,18 @@
             font-size: 17px;
         }
 
+        /* ROTEIRO JÁ ADICIONADO */
+
+        .cart-button.is-in-cart {
+            background: #163657;
+            border-color: #568bfa;
+            color: #a9c7ff;
+        }
+
+        /* =====================================
+           PREÇO E AÇÕES
+        ===================================== */
+
         .roteiro-footer {
             display: flex;
             align-items: center;
@@ -95,9 +143,15 @@
             margin-right: auto;
         }
 
+        /* =====================================
+           RESPONSIVIDADE
+        ===================================== */
+
         @media (max-width: 1150px) {
+
             .layout:has(> .right-sidebar) {
-                grid-template-columns: 220px minmax(0, 1fr) !important;
+                grid-template-columns:
+                    220px minmax(0, 1fr) !important;
             }
 
             .layout > .right-sidebar {
@@ -106,8 +160,10 @@
         }
 
         @media (max-width: 850px) {
+
             .layout:has(> .right-sidebar) {
-                grid-template-columns: minmax(0, 1fr) !important;
+                grid-template-columns:
+                    minmax(0, 1fr) !important;
             }
 
             .botao-favorito {
@@ -117,95 +173,176 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="layout">
 
-    <!-- MENU LATERAL -->
+    <!-- =====================================
+         MENU LATERAL
+    ===================================== -->
+
     <aside class="sidebar">
+
         <a href="/" class="logo">
             TAKES
             <i class="bi bi-camera-reels-fill"></i>
         </a>
 
         <nav class="menu">
-            <a href="/roteiros" class="menu-item active" aria-current="page">
+
+            <a
+                href="/roteiros"
+                class="menu-item active"
+                aria-current="page">
+
                 <i class="bi bi-house-door"></i>
                 <span>Início</span>
+
             </a>
 
             <a href="/perfil" class="menu-item">
+
                 <i class="bi bi-person"></i>
                 <span>Perfil</span>
+
             </a>
 
             <a href="/favoritos" class="menu-item">
+
                 <i class="bi bi-star"></i>
                 <span>Favoritos</span>
+
             </a>
 
-            <a href="#carrinho" class="menu-item">
+            <a href="/carrinho" class="menu-item">
+
                 <i class="bi bi-cart3"></i>
                 <span>Carrinho</span>
+
             </a>
+
         </nav>
+
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- =====================================
+         CONTEÚDO PRINCIPAL
+    ===================================== -->
+
     <main class="main-content">
 
+        <!-- PESQUISA -->
+
         <div class="search-container">
+
             <i class="bi bi-search"></i>
+
             <input
                 type="search"
                 id="pesquisa"
                 placeholder="Buscar por roteiros, criadores ou palavras-chave..."
                 aria-label="Pesquisar roteiros">
+
         </div>
+
+        <!-- =====================================
+             TÍTULO
+        ===================================== -->
 
         <div class="explorar-heading">
-            <p class="section-eyebrow">DESCUBRA NOVAS HISTÓRIAS</p>
-            <h1>Explorar roteiros<span>.</span></h1>
-            <p>Histórias originais esperando para ganhar vida.</p>
+
+            <p class="section-eyebrow">
+                DESCUBRA NOVAS HISTÓRIAS
+            </p>
+
+            <h1>
+                Explorar roteiros<span>.</span>
+            </h1>
+
+            <p>
+                Histórias originais esperando para ganhar vida.
+            </p>
+
         </div>
 
-        <!-- ABAS -->
+        <!-- =====================================
+             ABAS E PUBLICAÇÃO
+        ===================================== -->
+
         <section class="feed-header">
+
             <div class="tabs">
-                <button type="button" class="tab active" data-tab="todos">
+
+                <button
+                    type="button"
+                    class="tab active"
+                    data-tab="todos">
+
                     Para você
+
                 </button>
 
-                <button type="button" class="tab" data-tab="recentes">
+                <button
+                    type="button"
+                    class="tab"
+                    data-tab="recentes">
+
                     Recentes
+
                 </button>
+
             </div>
 
             <div class="create-post">
+
                 <div class="avatar">
                     <i class="bi bi-person-fill"></i>
                 </div>
 
                 <div class="post-input">
-                    <span>Tem uma história para compartilhar?</span>
 
-                    <a href="/admin/produtos/form-cadastrar" class="publish-link">
+                    <span>
+                        Tem uma história para compartilhar?
+                    </span>
+
+                    <a
+                        href="/admin/produtos/form-cadastrar"
+                        class="publish-link">
+
                         Publicar
+
                     </a>
+
                 </div>
+
             </div>
+
         </section>
 
-        <!-- ROTEIROS DO SQLITE -->
+        <!-- =====================================
+             LISTA DOS ROTEIROS DO SQLITE
+        ===================================== -->
+
         <section class="feed" id="feed">
 
             <% if (produtos.length === 0) { %>
+
                 <div class="empty-feed">
+
                     <i class="bi bi-camera-reels"></i>
+
                     <h2>Nenhum roteiro cadastrado</h2>
-                    <p>As próximas histórias aparecerão aqui.</p>
+
+                    <p>
+                        As próximas histórias aparecerão aqui.
+                    </p>
+
                 </div>
+
             <% } %>
+
+            <!-- UM CARD PARA CADA ROTEIRO -->
 
             <% produtos.forEach(produto => { %>
 
@@ -213,7 +350,10 @@
                     class="post roteiro-card"
                     data-id="<%= produto.id %>">
 
-                    <!-- ESTRELA DE FAVORITOS -->
+                    <!-- =================================
+                         FAVORITOS
+                    ================================= -->
+
                     <button
                         type="button"
                         class="botao-favorito"
@@ -221,283 +361,555 @@
                         aria-label="Adicionar aos favoritos"
                         aria-pressed="false"
                         title="Adicionar aos favoritos">
+
                         <i class="bi bi-star"></i>
+
                     </button>
 
+                    <!-- =================================
+                         AUTOR
+                    ================================= -->
+
                     <div class="post-author">
+
                         <div class="avatar">
                             <i class="bi bi-person-fill"></i>
                         </div>
 
                         <div class="author-info">
+
                             <h3>TAKES Creator</h3>
+
                             <small>
+
                                 <i class="bi bi-film"></i>
+
                                 Roteiro #<%= produto.id %>
+
                             </small>
+
                         </div>
 
                         <span class="post-status">
+
                             <i class="bi bi-circle-fill"></i>
+
                             Publicado
+
                         </span>
+
                     </div>
 
+                    <!-- =================================
+                         TÍTULO DO ROTEIRO
+                    ================================= -->
+
                     <h2 class="roteiro-title">
+
                         <%= produto.nome %>
+
                     </h2>
 
-                    <!-- CAPA -->
+                    <!-- =================================
+                         CAPA DO ROTEIRO
+                    ================================= -->
+
                     <a
                         class="cover-link"
                         href="/roteiros/<%= produto.id %>"
                         aria-label="Ver roteiro <%= produto.nome %>">
 
                         <% if (produto.imagem) { %>
+
                             <img
                                 class="post-image"
                                 src="/uploads/<%= encodeURIComponent(produto.imagem) %>"
                                 alt="Capa de <%= produto.nome %>"
                                 loading="lazy">
+
                         <% } else { %>
+
                             <div class="cover-placeholder">
+
                                 <i class="bi bi-camera-reels"></i>
+
                                 <span>TAKES ORIGINAL</span>
+
                             </div>
+
                         <% } %>
+
                     </a>
 
+                    <!-- =================================
+                         DESCRIÇÃO
+                    ================================= -->
+
                     <% if (produto.descricao) { %>
+
                         <p class="roteiro-description">
+
                             <%= produto.descricao %>
+
                         </p>
+
                     <% } %>
 
-                    <!-- TAGS -->
+                    <!-- =================================
+                         TAGS
+                    ================================= -->
+
                     <div class="tags">
+
                         <% if (produto.genero) { %>
-                            <span><%= produto.genero %></span>
+
+                            <span>
+                                <%= produto.genero %>
+                            </span>
+
                         <% } %>
 
                         <% if (produto.categoria) { %>
+
                             <span>
-                                <%= produto.nome_categoria || produto.categoria %>
+
+                                <%= produto.nome_categoria ||
+                                    produto.categoria %>
+
                             </span>
+
                         <% } %>
 
                         <span>Roteiro</span>
+
                     </div>
 
-                    <!-- PREÇO E AÇÕES -->
+                    <!-- =================================
+                         PREÇO E BOTÕES
+                    ================================= -->
+
                     <div class="roteiro-footer">
 
+                        <!-- PREÇO -->
+
                         <div class="roteiro-price">
-                            <small>Valor do roteiro</small>
+
+                            <small>
+                                Valor do roteiro
+                            </small>
+
                             <strong>
-                                R$ <%= Number(produto.valor || 0).toFixed(2).replace('.', ',') %>
+
+                                R$ <%= Number(produto.valor || 0)
+                                    .toFixed(2)
+                                    .replace('.', ',') %>
+
                             </strong>
+
                         </div>
 
-                        <!-- VER ROTEIRO PRESERVADO -->
+                        <!-- VER ROTEIRO -->
+
                         <a
                             href="/roteiros/<%= produto.id %>"
                             class="view-button">
+
                             Ver roteiro
+
                             <i class="bi bi-arrow-up-right"></i>
+
                         </a>
 
-                        <!-- CARRINHO APENAS VISUAL -->
-                        <button type="button" class="cart-button">
+                        <!-- =================================
+                             CARRINHO FUNCIONAL
+                        ================================= -->
+
+                        <button
+                            type="button"
+                            class="cart-button"
+                            data-cart-id="<%= produto.id %>">
+
                             <i class="bi bi-cart-plus"></i>
-                            Adicionar ao carrinho
+
+                            <span class="cart-label">
+                                Adicionar ao carrinho
+                            </span>
+
                         </button>
 
                     </div>
 
                 </article>
+
             <% }); %>
 
         </section>
 
-        <div id="semResultados" class="empty-feed" style="display:none;">
+        <!-- =====================================
+             SEM RESULTADOS NA PESQUISA
+        ===================================== -->
+
+        <div
+            id="semResultados"
+            class="empty-feed"
+            style="display:none;">
+
             <i class="bi bi-search"></i>
+
             <h2>Nenhum resultado encontrado</h2>
+
             <p>Tente pesquisar outro termo.</p>
+
         </div>
 
     </main>
 
-    <!-- PAINEL DIREITO -->
+    <!-- =====================================
+         PAINEL DIREITO
+    ===================================== -->
+
     <aside class="right-sidebar">
 
+        <!-- CRIADORES -->
+
         <section class="widget creators">
+
             <h3>Criadores que você segue</h3>
 
             <div class="creator">
-                <div class="avatar"><i class="bi bi-person-fill"></i></div>
+
+                <div class="avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
                 <div>
                     <strong>Buddy_Creator</strong>
                     <small>Roteirista</small>
                 </div>
+
             </div>
 
             <div class="creator">
-                <div class="avatar"><i class="bi bi-person-fill"></i></div>
+
+                <div class="avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
                 <div>
                     <strong>Buddy_Creator2</strong>
                     <small>Roteirista</small>
                 </div>
+
             </div>
 
             <div class="creator">
-                <div class="avatar"><i class="bi bi-person-fill"></i></div>
+
+                <div class="avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
                 <div>
                     <strong>Buddy_Creator3</strong>
                     <small>Roteirista</small>
                 </div>
+
             </div>
+
         </section>
+
+        <!-- CONTAGEM DE ROTEIROS -->
 
         <section class="widget trends">
+
             <h3>Roteiros disponíveis</h3>
+
             <p class="library-counter">
-                <strong><%= produtos.length %></strong>
+
+                <strong>
+                    <%= produtos.length %>
+                </strong>
+
                 roteiro(s) cadastrado(s)
+
             </p>
+
         </section>
 
+        <!-- PUBLICAR ROTEIRO -->
+
         <section class="promo">
+
             <i class="bi bi-camera-reels-fill"></i>
-            <p>Publique seus roteiros e alcance novos públicos.</p>
-            <a href="/admin/produtos/form-cadastrar" class="promo-action">
+
+            <p>
+                Publique seus roteiros e alcance novos públicos.
+            </p>
+
+            <a
+                href="/admin/produtos/form-cadastrar"
+                class="promo-action">
+
                 Começar agora
+
             </a>
+
         </section>
 
     </aside>
+
 </div>
 
-<script>
-    const pesquisa = document.getElementById('pesquisa');
-    const feed = document.getElementById('feed');
-    const cards = [...document.querySelectorAll('.roteiro-card')];
-    const vazio = document.getElementById('semResultados');
-    const tabs = document.querySelectorAll('.tab');
+<!-- ==========================================
+     JAVASCRIPT DA PÁGINA
+========================================== -->
 
+<script>
+
+    // ======================================
+    // PESQUISA
+    // ======================================
+
+    const pesquisa =
+        document.getElementById('pesquisa');
+
+    const feed =
+        document.getElementById('feed');
+
+    const cards = [
+        ...document.querySelectorAll('.roteiro-card')
+    ];
+
+    const vazio =
+        document.getElementById('semResultados');
+
+    const tabs =
+        document.querySelectorAll('.tab');
+
+    // NORMALIZAR TEXTO
     function normalizar(texto) {
+
         return String(texto || '')
             .toLowerCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '');
+
     }
 
+    // FILTRAR ROTEIROS
     function filtrar() {
-        const termo = normalizar(pesquisa.value.trim());
+
+        const termo = normalizar(
+            pesquisa.value.trim()
+        );
+
         let encontrados = 0;
 
         cards.forEach(card => {
-            const visivel = normalizar(card.textContent).includes(termo);
+
+            const visivel = normalizar(
+                card.textContent
+            ).includes(termo);
+
             card.hidden = !visivel;
-            if (visivel) encontrados++;
+
+            if (visivel) {
+                encontrados++;
+            }
+
         });
 
         vazio.style.display =
-            cards.length > 0 && encontrados === 0 ? 'block' : 'none';
+            cards.length > 0 && encontrados === 0
+                ? 'block'
+                : 'none';
+
     }
 
-    pesquisa.addEventListener('input', filtrar);
+    pesquisa.addEventListener(
+        'input',
+        filtrar
+    );
+
+    // ======================================
+    // ABAS
+    // ======================================
 
     tabs.forEach(tab => {
+
         tab.addEventListener('click', () => {
-            tabs.forEach(item => item.classList.remove('active'));
-            tab.classList.add('active');
 
-            const recentes = tab.dataset.tab === 'recentes';
-
-            const ordenados = [...cards].sort((a, b) => {
-                const idA = Number(a.dataset.id);
-                const idB = Number(b.dataset.id);
-                return recentes ? idB - idA : idA - idB;
+            tabs.forEach(item => {
+                item.classList.remove('active');
             });
 
-            ordenados.forEach(card => feed.appendChild(card));
+            tab.classList.add('active');
+
+            const recentes =
+                tab.dataset.tab === 'recentes';
+
+            const ordenados = [...cards].sort(
+                (a, b) => {
+
+                    const idA = Number(a.dataset.id);
+                    const idB = Number(b.dataset.id);
+
+                    return recentes
+                        ? idB - idA
+                        : idA - idB;
+
+                }
+            );
+
+            ordenados.forEach(card => {
+                feed.appendChild(card);
+            });
+
             filtrar();
+
         });
+
     });
 
+    // ======================================
     // FAVORITOS
-    const CHAVE_FAVORITOS = 'takes_favoritos_v1';
+    // ======================================
 
+    const CHAVE_FAVORITOS =
+        'takes_favoritos_v1';
+
+    // OBTER FAVORITOS
     function obterFavoritos() {
+
         try {
+
             const dados = JSON.parse(
                 localStorage.getItem(CHAVE_FAVORITOS) || '{}'
             );
 
-            return dados && typeof dados === 'object' &&
-                !Array.isArray(dados) ? dados : {};
-        } catch {
+            return dados &&
+                typeof dados === 'object' &&
+                !Array.isArray(dados)
+                    ? dados
+                    : {};
+
+        } catch (erro) {
+
+            console.error(erro);
             return {};
+
         }
+
     }
 
+    // ATUALIZAR ESTRELAS
     function atualizarEstrelas() {
+
         const favoritos = obterFavoritos();
 
-        document.querySelectorAll('.botao-favorito')
-            .forEach(botao => {
-                const id = botao.dataset.favoriteId;
-                const ativo = Boolean(favoritos[id]);
+        document.querySelectorAll(
+            '.botao-favorito'
+        ).forEach(botao => {
 
-                botao.classList.toggle('favoritado', ativo);
-                botao.setAttribute('aria-pressed', String(ativo));
+            const id =
+                botao.dataset.favoriteId;
 
-                botao.setAttribute(
-                    'aria-label',
-                    ativo ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-                );
+            const ativo =
+                Boolean(favoritos[id]);
 
-                botao.title = ativo
+            botao.classList.toggle(
+                'favoritado',
+                ativo
+            );
+
+            botao.setAttribute(
+                'aria-pressed',
+                String(ativo)
+            );
+
+            botao.setAttribute(
+                'aria-label',
+                ativo
                     ? 'Remover dos favoritos'
-                    : 'Adicionar aos favoritos';
+                    : 'Adicionar aos favoritos'
+            );
 
-                botao.querySelector('i').className = ativo
+            botao.title = ativo
+                ? 'Remover dos favoritos'
+                : 'Adicionar aos favoritos';
+
+            botao.querySelector('i').className =
+                ativo
                     ? 'bi bi-star-fill'
                     : 'bi bi-star';
-            });
+
+        });
+
     }
 
+    // ADICIONAR OU REMOVER FAVORITO
     function alternarFavorito(id) {
+
         const favoritos = obterFavoritos();
 
         if (favoritos[id]) {
+
             delete favoritos[id];
+
         } else {
+
             favoritos[id] = Date.now();
+
         }
 
         try {
+
             localStorage.setItem(
                 CHAVE_FAVORITOS,
                 JSON.stringify(favoritos)
             );
+
             atualizarEstrelas();
+
         } catch (erro) {
+
             console.error(erro);
-            alert('Não foi possível salvar o favorito.');
+
+            alert(
+                'Não foi possível salvar o favorito.'
+            );
+
         }
+
     }
 
-    document.querySelectorAll('.botao-favorito')
-        .forEach(botao => {
-            botao.addEventListener('click', () => {
-                alternarFavorito(botao.dataset.favoriteId);
-            });
+    document.querySelectorAll(
+        '.botao-favorito'
+    ).forEach(botao => {
+
+        botao.addEventListener('click', () => {
+
+            alternarFavorito(
+                botao.dataset.favoriteId
+            );
+
         });
 
-    window.addEventListener('storage', atualizarEstrelas);
+    });
+
+    window.addEventListener(
+        'storage',
+        atualizarEstrelas
+    );
+
     atualizarEstrelas();
+
 </script>
+
+<!-- ==========================================
+     JAVASCRIPT DO CARRINHO
+========================================== -->
+
+<script src="/js/carrinho-loja.js" defer></script>
 
 </body>
 </html>

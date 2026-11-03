@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Carrinho | TAKES</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/carrinho.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+
+        <a href="/roteiros" class="logo">
+            TAKES
+            <i class="bi bi-camera-reels-fill"></i>
+        </a>
+
+        <nav class="menu">
+
+            <a href="/roteiros" class="menu-item">
+                <i class="bi bi-house-door"></i>
+                <span>Início</span>
+            </a>
+
+            <a href="/perfil" class="menu-item">
+                <i class="bi bi-person"></i>
+                <span>Perfil</span>
+            </a>
+
+            <a href="/favoritos" class="menu-item">
+                <i class="bi bi-star"></i>
+                <span>Favoritos</span>
+            </a>
+
+            <a href="/carrinho" class="menu-item active">
+                <i class="bi bi-cart3"></i>
+                <span>Carrinho</span>
+                <span id="badge-menu" class="menu-cart-count" hidden></span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content cart-main">
+
+        <!-- CABEÇALHO -->
+        <header class="cart-topbar">
+
+            <form
+                class="search-container cart-search"
+                action="/roteiros"
+                method="GET">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar por roteiros, criadores ou palavras-chave..."
+                    aria-label="Buscar roteiros">
+            </form>
+
+            <div class="cart-top-actions">
+
+                <span class="top-notification">
+                    <i class="bi bi-bell"></i>
+                </span>
+
+                <a href="/perfil" class="top-profile">
+                    <i class="bi bi-person-fill"></i>
+                </a>
+
+                <i class="bi bi-chevron-down top-chevron"></i>
+
+            </div>
+
+        </header>
+
+        <!-- ÁREA DO CARRINHO -->
+        <div class="cart-wrap">
+
+            <section class="cart-intro">
+
+                <span class="intro-kicker">
+                    SUA PRÓXIMA HISTÓRIA COMEÇA AQUI
+                </span>
+
+                <h1>Carrinho</h1>
+
+                <p>
+                    Revise sua seleção e dê o próximo passo
+                    para licenciar seu roteiro.
+                </p>
+
+            </section>
+
+            <div class="cart-grid">
+
+                <!-- COLUNA ESQUERDA -->
+                <div class="cart-left-column">
+
+                    <section class="selected-panel">
+
+                        <header class="selected-heading">
+
+                            <h2>Roteiros selecionados</h2>
+
+                            <span
+                                id="contagem-roteiros"
+                                class="selected-count">
+                                0 roteiros
+                            </span>
+
+                        </header>
+
+                        <!-- ROTEIROS INSERIDOS PELO JAVASCRIPT -->
+                        <div
+                            id="lista-carrinho"
+                            class="selected-list">
+                        </div>
+
+                        <!-- QUANDO O CARRINHO ESTIVER VAZIO -->
+                        <div
+                            id="carrinho-vazio"
+                            class="empty-cart"
+                            hidden>
+
+                            <i class="bi bi-cart3"></i>
+
+                            <h3>Seu carrinho está vazio</h3>
+
+                            <p>
+                                Explore os roteiros e encontre
+                                sua próxima história.
+                            </p>
+
+                            <a href="/roteiros">
+                                Explorar roteiros
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                    <!-- CONTINUAR EXPLORANDO -->
+                    <a
+                        href="/roteiros"
+                        class="continue-button">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Continuar explorando
+
+                    </a>
+
+                    <!-- AVISO -->
+                    <div class="cart-notice">
+
+                        <i class="bi bi-shield-check"></i>
+
+                        <div>
+
+                            <h3>
+                                Uma boa história merece um acordo certo.
+                            </h3>
+
+                            <p>
+                                Valores, prazo e direitos de uso serão
+                                definidos com os autores. Adicionar um roteiro
+                                ao carrinho não reserva nem transfere
+                                os direitos da obra.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- COLUNA DIREITA -->
+                <aside class="cart-right-column">
+
+                    <section class="summary-panel">
+
+                        <h2>Resumo do pedido</h2>
+
+                        <dl class="summary-list">
+
+                            <div>
+                                <dt>Roteiros selecionados</dt>
+                                <dd id="resumo-quantidade">0</dd>
+                            </div>
+
+                            <div>
+                                <dt>Objetivo</dt>
+                                <dd>Licenciar</dd>
+                            </div>
+
+                            <div>
+                                <dt>Valor da licença</dt>
+                                <dd id="resumo-licenca">A definir</dd>
+                            </div>
+
+                        </dl>
+
+                        <div class="summary-total">
+
+                            <span>Total</span>
+
+                            <strong id="resumo-total">
+                                A definir
+                            </strong>
+
+                        </div>
+
+                        <p
+                            id="aviso-valor"
+                            class="summary-explain">
+
+                            O valor final depende do escopo
+                            e das condições de licenciamento
+                            acordadas com os autores.
+
+                        </p>
+
+                        <button
+                            type="button"
+                            id="prosseguir-licenciamento"
+                            class="checkout-button"
+                            disabled>
+
+                            Prosseguir com licenciamento
+                            <i class="bi bi-chevron-right"></i>
+
+                        </button>
+
+                        <p class="no-charge">
+                            <i class="bi bi-lock"></i>
+                            Nenhuma cobrança nesta etapa
+                        </p>
+
+                    </section>
+
+                    <section class="next-steps">
+
+                        <h3>O que acontece depois?</h3>
+
+                        <p>
+                            Você informa como pretende utilizar
+                            a obra e prepara sua solicitação
+                            de licenciamento para negociação
+                            com os autores.
+                        </p>
+
+                    </section>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- MODELO VISUAL DE CADA ROTEIRO -->
+<template id="modelo-roteiro-carrinho">
+
+    <article class="cart-product">
+
+        <div class="cart-poster">
+
+            <img class="cart-poster-img" alt="Capa do roteiro">
+
+            <span class="cart-poster-fallback" hidden>
+                <i class="bi bi-camera-reels"></i>
+                Sem capa
+            </span>
+
+        </div>
+
+        <div class="cart-product-info">
+
+            <h3 class="cart-product-title"></h3>
+
+            <p class="cart-product-author"></p>
+
+            <p class="cart-product-description"></p>
+
+            <div class="cart-product-details">
+
+                <div>
+                    <span>FORMATO</span>
+                    <strong class="cart-product-format"></strong>
+                </div>
+
+                <div>
+                    <span>GÊNERO</span>
+                    <strong class="cart-product-genre"></strong>
+                </div>
+
+                <div>
+                    <span>DURAÇÃO</span>
+                    <strong class="cart-product-duration"></strong>
+                </div>
+
+            </div>
+
+            <div class="cart-product-bottom">
+
+                <span class="license-tag">
+                    Para licenciamento
+                </span>
+
+                <strong class="cart-product-price"></strong>
+
+            </div>
+
+            <div class="cart-product-links">
+
+                <a class="cart-detail-link">
+                    Ver detalhes do roteiro
+                </a>
+
+                <button
+                    type="button"
+                    class="cart-remove-button">
+
+                    <i class="bi bi-trash"></i>
+                    Remover
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</template>
+
+<!-- JANELA DE LICENCIAMENTO -->
+<dialog
+    id="dialogo-licenciamento"
+    class="license-dialog">
+
+    <div class="license-dialog-inner">
+
+        <div class="license-dialog-head">
+
+            <div>
+                <span class="intro-kicker">PRÓXIMO PASSO</span>
+                <h2>Solicitação de licenciamento</h2>
+            </div>
+
+            <button
+                type="button"
+                id="fechar-licenciamento"
+                class="dialog-close">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+        <p>
+            Preencha as informações abaixo para preparar
+            um resumo da solicitação. Esta etapa não realiza
+            pagamentos nem envia dados automaticamente.
+        </p>
+
+        <label for="licenca-nome">Seu nome</label>
+
+        <input
+            id="licenca-nome"
+            type="text"
+            placeholder="Nome ou empresa">
+
+        <label for="licenca-email">Seu e-mail</label>
+
+        <input
+            id="licenca-email"
+            type="email"
+            placeholder="seuemail@exemplo.com">
+
+        <label for="licenca-objetivo">
+            Como pretende utilizar os roteiros?
+        </label>
+
+        <textarea
+            id="licenca-objetivo"
+            rows="3"
+            placeholder="Ex.: curta-metragem, campanha publicitária..."></textarea>
+
+        <div class="license-dialog-actions">
+
+            <button
+                type="button"
+                id="copiar-solicitacao"
+                class="checkout-button">
+
+                <i class="bi bi-clipboard"></i>
+                Copiar resumo da solicitação
+
+            </button>
+
+        </div>
+
+        <p
+            id="licenca-feedback"
+            class="license-feedback">
+        </p>
+
+    </div>
+
+</dialog>
+
+<!-- DADOS VINDOS DO SQLITE -->
+<script id="dados-roteiros" type="application/json"><%- JSON.stringify(produtos || []).replace(/</g, '\\u003c') %></script>
+
+<script src="/js/carrinho-loja.js" defer></script>
+<script src="/js/carrinho.js" defer></script>
+
+</body>
+</html>

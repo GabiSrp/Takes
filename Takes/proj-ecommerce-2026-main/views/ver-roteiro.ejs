@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,13 +9,14 @@
     <title><%= produto.nome %> | TAKES</title>
 
     <link rel="stylesheet" href="/css/global.css">
+
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-        /* CONFIGURAÇÃO DA PÁGINA */
+        /* CONFIGURAÇÃO GERAL */
 
         body {
             margin: 0;
@@ -158,7 +160,7 @@
             overflow-wrap: anywhere;
         }
 
-        /* INFORMAÇÕES HORIZONTAIS */
+        /* METADADOS */
 
         .metadados {
             display: grid;
@@ -201,11 +203,13 @@
             overflow-wrap: anywhere;
         }
 
-        /* CARDS DE INFORMAÇÕES */
+        /* CARDS */
 
         .cards-informacoes {
             display: grid;
-            grid-template-columns: minmax(0, 1.7fr) minmax(230px, 1fr);
+            grid-template-columns:
+                minmax(0, 1.7fr)
+                minmax(230px, 1fr);
             gap: 14px;
         }
 
@@ -262,7 +266,7 @@
             font-size: 12px;
         }
 
-        /* CAPA À DIREITA */
+        /* CAPA */
 
         .detalhes-direita {
             display: flex;
@@ -301,7 +305,11 @@
             padding: 24px;
             width: 100%;
             height: 100%;
-            background: linear-gradient(145deg, #0b1421, #1d385b);
+            background: linear-gradient(
+                145deg,
+                #0b1421,
+                #1d385b
+            );
             text-align: center;
         }
 
@@ -321,7 +329,7 @@
             overflow-wrap: anywhere;
         }
 
-        /* BOTÕES DA DIREITA */
+        /* BOTÕES */
 
         .botao-principal,
         .botao-secundario {
@@ -372,15 +380,30 @@
             font-size: 19px;
         }
 
+        /* FAVORITOS ATIVOS */
+
         .botao-secundario.favoritado {
             color: #80acff;
             border-color: #568bfa;
             background: #11233b;
         }
 
+        /* CARRINHO ATIVO */
+
+        .botao-secundario.is-in-cart {
+            color: #8fb5ff;
+            border-color: #568bfa;
+            background: #11233b;
+        }
+
+        .botao-secundario.is-in-cart:hover {
+            background: #193151;
+        }
+
         /* RESPONSIVIDADE */
 
         @media (max-width: 1350px) {
+
             .layout > .main-content.detalhes-main {
                 padding-left: 30px;
                 padding-right: 30px;
@@ -396,12 +419,15 @@
         }
 
         @media (max-width: 1100px) {
+
             .roteiro-detalhes {
-                grid-template-columns: minmax(0, 1fr) 300px;
+                grid-template-columns:
+                    minmax(0, 1fr) 300px;
             }
 
             .metadados {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
                 row-gap: 22px;
             }
 
@@ -415,6 +441,7 @@
         }
 
         @media (max-width: 950px) {
+
             .roteiro-detalhes {
                 grid-template-columns: 1fr;
             }
@@ -431,6 +458,7 @@
         }
 
         @media (max-width: 850px) {
+
             .layout > .main-content.detalhes-main {
                 grid-column: 1;
                 padding: 20px 18px 50px;
@@ -442,6 +470,7 @@
         }
 
         @media (max-width: 500px) {
+
             .detalhes-esquerda h1 {
                 font-size: 32px;
             }
@@ -474,6 +503,7 @@
 <div class="layout">
 
     <!-- MENU LATERAL -->
+
     <aside class="sidebar">
 
         <a href="/" class="logo">
@@ -498,23 +528,29 @@
                 <span>Favoritos</span>
             </a>
 
-            <a href="#carrinho" class="menu-item">
+            <!-- LINK DO CARRINHO CORRIGIDO -->
+
+            <a href="/carrinho" class="menu-item">
                 <i class="bi bi-cart3"></i>
                 <span>Carrinho</span>
             </a>
 
         </nav>
+
     </aside>
 
-    <!-- DETALHES -->
+    <!-- CONTEÚDO -->
+
     <main class="main-content detalhes-main">
 
         <!-- CABEÇALHO -->
+
         <header class="topbar detalhes-topbar">
 
-            <form action="/roteiros"
-                  method="GET"
-                  class="search-container">
+            <form
+                action="/roteiros"
+                method="GET"
+                class="search-container">
 
                 <i class="bi bi-search"></i>
 
@@ -534,17 +570,21 @@
                 <a href="/perfil"
                    class="profile-link"
                    aria-label="Editar perfil">
+
                     <i class="bi bi-person-fill"></i>
+
                 </a>
 
             </div>
 
         </header>
 
-        <!-- DUAS COLUNAS -->
+        <!-- CONTEÚDO EM DUAS COLUNAS -->
+
         <div class="roteiro-detalhes">
 
-            <!-- LADO ESQUERDO -->
+            <!-- ESQUERDA -->
+
             <section class="detalhes-esquerda">
 
                 <span class="destaque-label">
@@ -563,6 +603,7 @@
                 </p>
 
                 <!-- METADADOS -->
+
                 <div class="metadados">
 
                     <div class="metadado">
@@ -600,7 +641,8 @@
 
                 </div>
 
-                <!-- CARDS -->
+                <!-- CARDS DE INFORMAÇÕES -->
+
                 <div class="cards-informacoes">
 
                     <section class="info-box" id="descricao">
@@ -671,8 +713,11 @@
 
             </section>
 
-            <!-- LADO DIREITO -->
+            <!-- DIREITA -->
+
             <aside class="detalhes-direita">
+
+                <!-- CAPA -->
 
                 <div class="capa-container">
 
@@ -685,9 +730,13 @@
                     <% } else { %>
 
                         <div class="capa-vazia">
+
                             <i class="bi bi-camera-reels"></i>
+
                             <span>TAKES ORIGINAL</span>
+
                             <strong><%= produto.nome %></strong>
+
                         </div>
 
                     <% } %>
@@ -695,13 +744,19 @@
                 </div>
 
                 <!-- VER ROTEIRO -->
+
                 <a href="#descricao" class="botao-principal">
+
                     <i class="bi bi-file-earmark-text"></i>
+
                     <span>Ver roteiro</span>
+
                     <i class="bi bi-chevron-right seta"></i>
+
                 </a>
 
                 <!-- FAVORITOS -->
+
                 <button
                     type="button"
                     id="botaoFavorito"
@@ -714,12 +769,24 @@
                     <span id="textoFavorito">
                         Adicionar aos favoritos
                     </span>
+
                 </button>
 
-                <!-- CARRINHO VISUAL -->
-                <button type="button" class="botao-secundario">
+                <!-- CARRINHO FUNCIONAL -->
+
+                <button
+                    type="button"
+                    id="botaoCarrinho"
+                    class="botao-secundario"
+                    data-cart-id="<%= produto.id %>"
+                    aria-label="Adicionar roteiro ao carrinho">
+
                     <i class="bi bi-cart-plus"></i>
-                    <span>Adicionar ao carrinho</span>
+
+                    <span class="cart-label">
+                        Adicionar ao carrinho
+                    </span>
+
                 </button>
 
             </aside>
@@ -730,32 +797,62 @@
 
 </div>
 
+<!-- ==========================================
+     JAVASCRIPT DOS FAVORITOS
+========================================== -->
+
 <script>
-    const botaoFavorito = document.getElementById('botaoFavorito');
-    const iconeFavorito = document.getElementById('iconeFavorito');
-    const textoFavorito = document.getElementById('textoFavorito');
+
+    const botaoFavorito =
+        document.getElementById('botaoFavorito');
+
+    const iconeFavorito =
+        document.getElementById('iconeFavorito');
+
+    const textoFavorito =
+        document.getElementById('textoFavorito');
+
     const roteiroId = botaoFavorito.dataset.id;
-    const CHAVE = 'takes_favoritos_v1';
+
+    const CHAVE_FAVORITOS = 'takes_favoritos_v1';
 
     function obterFavoritos() {
+
         try {
+
             const dados = JSON.parse(
-                localStorage.getItem(CHAVE) || '{}'
+                localStorage.getItem(CHAVE_FAVORITOS) || '{}'
             );
 
-            return dados && typeof dados === 'object' &&
-                !Array.isArray(dados) ? dados : {};
-        } catch {
+            return dados &&
+                typeof dados === 'object' &&
+                !Array.isArray(dados)
+                    ? dados
+                    : {};
+
+        } catch (erro) {
+
+            console.error(erro);
             return {};
+
         }
     }
 
-    function atualizarBotao() {
+    function atualizarBotaoFavorito() {
+
         const favoritos = obterFavoritos();
+
         const ativo = Boolean(favoritos[roteiroId]);
 
-        botaoFavorito.classList.toggle('favoritado', ativo);
-        botaoFavorito.setAttribute('aria-pressed', String(ativo));
+        botaoFavorito.classList.toggle(
+            'favoritado',
+            ativo
+        );
+
+        botaoFavorito.setAttribute(
+            'aria-pressed',
+            String(ativo)
+        );
 
         iconeFavorito.className = ativo
             ? 'bi bi-heart-fill'
@@ -767,6 +864,7 @@
     }
 
     botaoFavorito.addEventListener('click', () => {
+
         const favoritos = obterFavoritos();
 
         if (favoritos[roteiroId]) {
@@ -776,17 +874,157 @@
         }
 
         try {
-            localStorage.setItem(CHAVE, JSON.stringify(favoritos));
-            atualizarBotao();
+
+            localStorage.setItem(
+                CHAVE_FAVORITOS,
+                JSON.stringify(favoritos)
+            );
+
+            atualizarBotaoFavorito();
+
         } catch (erro) {
+
             console.error(erro);
-            alert('Não foi possível salvar o favorito.');
+
+            alert(
+                'Não foi possível salvar o favorito.'
+            );
         }
     });
 
-    window.addEventListener('storage', atualizarBotao);
-    atualizarBotao();
+    window.addEventListener(
+        'storage',
+        atualizarBotaoFavorito
+    );
+
+    atualizarBotaoFavorito();
+
 </script>
+
+<!-- ==========================================
+     JAVASCRIPT DO CARRINHO
+     FUNCIONA DIRETAMENTE NESTA PÁGINA
+========================================== -->
+
+
+<script>
+    
+(function () {
+    'use strict';
+
+    const botao = document.getElementById('botaoCarrinho');
+    if (!botao) return;
+
+    const id = String(botao.dataset.cartId || '').trim();
+    const CHAVE_CARRINHO = 'takes_carrinho_v1';
+
+    const legenda = botao.querySelector('.cart-label');
+    const icone = botao.querySelector('i');
+
+    // LER OS ROTEIROS SALVOS
+    function lerCarrinho() {
+        try {
+            const salvo = JSON.parse(
+                localStorage.getItem(CHAVE_CARRINHO) || '[]'
+            );
+
+            if (!Array.isArray(salvo)) return [];
+
+            return [...new Set(
+                salvo.map(String).filter(
+                    item => /^\d+$/.test(item)
+                )
+            )];
+
+        } catch (erro) {
+            console.error('Erro ao ler carrinho:', erro);
+            return [];
+        }
+    }
+
+    // ATUALIZAR O BOTÃO
+    function atualizarBotao() {
+        const adicionado = lerCarrinho().includes(id);
+
+        botao.classList.toggle('is-in-cart', adicionado);
+
+        botao.setAttribute(
+            'aria-label',
+            adicionado
+                ? 'Ver carrinho'
+                : 'Adicionar roteiro ao carrinho'
+        );
+
+        if (legenda) {
+            legenda.textContent = adicionado
+                ? 'Ver carrinho'
+                : 'Adicionar ao carrinho';
+        }
+
+        if (icone) {
+            icone.className = adicionado
+                ? 'bi bi-bag-check'
+                : 'bi bi-cart-plus';
+        }
+    }
+
+    // ADICIONAR E ABRIR O CARRINHO
+    botao.addEventListener('click', function (evento) {
+        evento.preventDefault();
+
+        if (!/^\d+$/.test(id) || Number(id) <= 0) {
+            alert('Não foi possível identificar este roteiro.');
+            return;
+        }
+
+        try {
+            const carrinho = lerCarrinho();
+
+            // EVITAR DUPLICAÇÕES
+            if (!carrinho.includes(id)) {
+                carrinho.push(id);
+
+                localStorage.setItem(
+                    CHAVE_CARRINHO,
+                    JSON.stringify(carrinho)
+                );
+            }
+
+            // CONFIRMAR QUE FOI SALVO
+            if (!lerCarrinho().includes(id)) {
+                throw new Error('O roteiro não foi salvo.');
+            }
+
+            atualizarBotao();
+
+            console.log(
+                'TAKES: roteiro adicionado ao carrinho:',
+                id
+            );
+
+            // ABRIR O CARRINHO NO PRIMEIRO CLIQUE
+            window.location.assign('/carrinho');
+
+        } catch (erro) {
+            console.error('Erro ao adicionar:', erro);
+
+            alert(
+                'Não foi possível adicionar ao carrinho. ' +
+                'Confira o Console (F12).'
+            );
+        }
+    });
+
+    window.addEventListener('storage', function (evento) {
+        if (evento.key === CHAVE_CARRINHO) {
+            atualizarBotao();
+        }
+    });
+
+    atualizarBotao();
+})();
+</script>
+
 
 </body>
 </html>
