@@ -17,9 +17,7 @@
     >
 
     <style>
-        /* =====================================
-           CONFIGURAÇÃO DA PÁGINA
-        ===================================== */
+        /* CONFIGURAÇÃO DA PÁGINA */
 
         .layout:has(> .right-sidebar) {
             grid-template-columns:
@@ -31,9 +29,7 @@
             min-width: 0;
         }
 
-        /* =====================================
-           CARDS DOS ROTEIROS
-        ===================================== */
+        /* CARDS DOS ROTEIROS */
 
         .roteiro-card {
             position: relative;
@@ -43,9 +39,7 @@
             display: none !important;
         }
 
-        /* =====================================
-           BOTÃO FAVORITOS
-        ===================================== */
+        /* FAVORITOS */
 
         .botao-favorito {
             position: absolute;
@@ -83,9 +77,7 @@
             background: #182c50;
         }
 
-        /* =====================================
-           BOTÃO DO CARRINHO
-        ===================================== */
+        /* CARRINHO */
 
         .cart-button {
             display: inline-flex;
@@ -120,17 +112,13 @@
             font-size: 17px;
         }
 
-        /* ROTEIRO JÁ ADICIONADO */
-
         .cart-button.is-in-cart {
             background: #163657;
             border-color: #568bfa;
             color: #a9c7ff;
         }
 
-        /* =====================================
-           PREÇO E AÇÕES
-        ===================================== */
+        /* PREÇO E AÇÕES */
 
         .roteiro-footer {
             display: flex;
@@ -143,12 +131,9 @@
             margin-right: auto;
         }
 
-        /* =====================================
-           RESPONSIVIDADE
-        ===================================== */
+        /* RESPONSIVIDADE */
 
         @media (max-width: 1150px) {
-
             .layout:has(> .right-sidebar) {
                 grid-template-columns:
                     220px minmax(0, 1fr) !important;
@@ -160,7 +145,6 @@
         }
 
         @media (max-width: 850px) {
-
             .layout:has(> .right-sidebar) {
                 grid-template-columns:
                     minmax(0, 1fr) !important;
@@ -172,6 +156,7 @@
             }
         }
     </style>
+
 </head>
 
 <body>
@@ -246,9 +231,7 @@
 
         </div>
 
-        <!-- =====================================
-             TÍTULO
-        ===================================== -->
+        <!-- TÍTULO -->
 
         <div class="explorar-heading">
 
@@ -321,7 +304,7 @@
         </section>
 
         <!-- =====================================
-             LISTA DOS ROTEIROS DO SQLITE
+             ROTEIROS DO SQLITE
         ===================================== -->
 
         <section class="feed" id="feed">
@@ -342,17 +325,13 @@
 
             <% } %>
 
-            <!-- UM CARD PARA CADA ROTEIRO -->
-
             <% produtos.forEach(produto => { %>
 
                 <article
                     class="post roteiro-card"
                     data-id="<%= produto.id %>">
 
-                    <!-- =================================
-                         FAVORITOS
-                    ================================= -->
+                    <!-- FAVORITOS -->
 
                     <button
                         type="button"
@@ -366,9 +345,7 @@
 
                     </button>
 
-                    <!-- =================================
-                         AUTOR
-                    ================================= -->
+                    <!-- AUTOR -->
 
                     <div class="post-author">
 
@@ -381,11 +358,8 @@
                             <h3>TAKES Creator</h3>
 
                             <small>
-
                                 <i class="bi bi-film"></i>
-
                                 Roteiro #<%= produto.id %>
-
                             </small>
 
                         </div>
@@ -400,9 +374,7 @@
 
                     </div>
 
-                    <!-- =================================
-                         TÍTULO DO ROTEIRO
-                    ================================= -->
+                    <!-- TÍTULO -->
 
                     <h2 class="roteiro-title">
 
@@ -410,9 +382,7 @@
 
                     </h2>
 
-                    <!-- =================================
-                         CAPA DO ROTEIRO
-                    ================================= -->
+                    <!-- CAPA -->
 
                     <a
                         class="cover-link"
@@ -441,9 +411,7 @@
 
                     </a>
 
-                    <!-- =================================
-                         DESCRIÇÃO
-                    ================================= -->
+                    <!-- DESCRIÇÃO -->
 
                     <% if (produto.descricao) { %>
 
@@ -455,9 +423,7 @@
 
                     <% } %>
 
-                    <!-- =================================
-                         TAGS
-                    ================================= -->
+                    <!-- TAGS -->
 
                     <div class="tags">
 
@@ -472,10 +438,7 @@
                         <% if (produto.categoria) { %>
 
                             <span>
-
-                                <%= produto.nome_categoria ||
-                                    produto.categoria %>
-
+                                <%= produto.nome_categoria || produto.categoria %>
                             </span>
 
                         <% } %>
@@ -484,9 +447,9 @@
 
                     </div>
 
-                    <!-- =================================
+                    <!-- =====================================
                          PREÇO E BOTÕES
-                    ================================= -->
+                    ===================================== -->
 
                     <div class="roteiro-footer">
 
@@ -501,8 +464,10 @@
                             <strong>
 
                                 R$ <%= Number(produto.valor || 0)
-                                    .toFixed(2)
-                                    .replace('.', ',') %>
+                                    .toLocaleString('pt-BR', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }) %>
 
                             </strong>
 
@@ -520,9 +485,7 @@
 
                         </a>
 
-                        <!-- =================================
-                             CARRINHO FUNCIONAL
-                        ================================= -->
+                        <!-- CARRINHO ORIGINAL -->
 
                         <button
                             type="button"
@@ -546,7 +509,7 @@
         </section>
 
         <!-- =====================================
-             SEM RESULTADOS NA PESQUISA
+             SEM RESULTADOS
         ===================================== -->
 
         <div
@@ -558,7 +521,9 @@
 
             <h2>Nenhum resultado encontrado</h2>
 
-            <p>Tente pesquisar outro termo.</p>
+            <p>
+                Tente pesquisar outro termo.
+            </p>
 
         </div>
 
@@ -635,7 +600,7 @@
 
         </section>
 
-        <!-- PUBLICAR ROTEIRO -->
+        <!-- PUBLICAR -->
 
         <section class="promo">
 
@@ -660,32 +625,31 @@
 </div>
 
 <!-- ==========================================
-     JAVASCRIPT DA PÁGINA
+     JAVASCRIPT: PESQUISA, ABAS E FAVORITOS
 ========================================== -->
 
 <script>
 
     // ======================================
-    // PESQUISA
+    // ELEMENTOS DA PÁGINA
     // ======================================
 
-    const pesquisa =
-        document.getElementById('pesquisa');
+    const pesquisa = document.getElementById('pesquisa');
 
-    const feed =
-        document.getElementById('feed');
+    const feed = document.getElementById('feed');
 
     const cards = [
         ...document.querySelectorAll('.roteiro-card')
     ];
 
-    const vazio =
-        document.getElementById('semResultados');
+    const vazio = document.getElementById('semResultados');
 
-    const tabs =
-        document.querySelectorAll('.tab');
+    const tabs = document.querySelectorAll('.tab');
 
+    // ======================================
     // NORMALIZAR TEXTO
+    // ======================================
+
     function normalizar(texto) {
 
         return String(texto || '')
@@ -695,7 +659,10 @@
 
     }
 
-    // FILTRAR ROTEIROS
+    // ======================================
+    // PESQUISAR ROTEIROS
+    // ======================================
+
     function filtrar() {
 
         const termo = normalizar(
@@ -725,13 +692,30 @@
 
     }
 
-    pesquisa.addEventListener(
-        'input',
-        filtrar
-    );
+    // PESQUISA DIGITADA NESTA PÁGINA
+
+    pesquisa.addEventListener('input', filtrar);
 
     // ======================================
-    // ABAS
+    // NOVO: RECEBER A PESQUISA DA HOME
+    // ======================================
+
+    const parametros = new URLSearchParams(
+        window.location.search
+    );
+
+    const termoHome = parametros.get('q');
+
+    if (termoHome) {
+
+        pesquisa.value = termoHome;
+
+        filtrar();
+
+    }
+
+    // ======================================
+    // ABAS: PARA VOCÊ E RECENTES
     // ======================================
 
     tabs.forEach(tab => {
@@ -764,6 +748,8 @@
                 feed.appendChild(card);
             });
 
+            // MANTER A PESQUISA AO TROCAR DE ABA
+
             filtrar();
 
         });
@@ -774,10 +760,8 @@
     // FAVORITOS
     // ======================================
 
-    const CHAVE_FAVORITOS =
-        'takes_favoritos_v1';
+    const CHAVE_FAVORITOS = 'takes_favoritos_v1';
 
-    // OBTER FAVORITOS
     function obterFavoritos() {
 
         try {
@@ -795,58 +779,61 @@
         } catch (erro) {
 
             console.error(erro);
+
             return {};
 
         }
 
     }
 
+    // ======================================
     // ATUALIZAR ESTRELAS
+    // ======================================
+
     function atualizarEstrelas() {
 
         const favoritos = obterFavoritos();
 
-        document.querySelectorAll(
-            '.botao-favorito'
-        ).forEach(botao => {
+        document.querySelectorAll('.botao-favorito')
+            .forEach(botao => {
 
-            const id =
-                botao.dataset.favoriteId;
+                const id = botao.dataset.favoriteId;
 
-            const ativo =
-                Boolean(favoritos[id]);
+                const ativo = Boolean(favoritos[id]);
 
-            botao.classList.toggle(
-                'favoritado',
-                ativo
-            );
+                botao.classList.toggle(
+                    'favoritado',
+                    ativo
+                );
 
-            botao.setAttribute(
-                'aria-pressed',
-                String(ativo)
-            );
+                botao.setAttribute(
+                    'aria-pressed',
+                    String(ativo)
+                );
 
-            botao.setAttribute(
-                'aria-label',
-                ativo
+                botao.setAttribute(
+                    'aria-label',
+                    ativo
+                        ? 'Remover dos favoritos'
+                        : 'Adicionar aos favoritos'
+                );
+
+                botao.title = ativo
                     ? 'Remover dos favoritos'
-                    : 'Adicionar aos favoritos'
-            );
+                    : 'Adicionar aos favoritos';
 
-            botao.title = ativo
-                ? 'Remover dos favoritos'
-                : 'Adicionar aos favoritos';
-
-            botao.querySelector('i').className =
-                ativo
+                botao.querySelector('i').className = ativo
                     ? 'bi bi-star-fill'
                     : 'bi bi-star';
 
-        });
+            });
 
     }
 
-    // ADICIONAR OU REMOVER FAVORITO
+    // ======================================
+    // ADICIONAR OU REMOVER FAVORITOS
+    // ======================================
+
     function alternarFavorito(id) {
 
         const favoritos = obterFavoritos();
@@ -874,27 +861,28 @@
 
             console.error(erro);
 
-            alert(
-                'Não foi possível salvar o favorito.'
-            );
+            alert('Não foi possível salvar o favorito.');
 
         }
 
     }
 
-    document.querySelectorAll(
-        '.botao-favorito'
-    ).forEach(botao => {
+    // CLIQUES NAS ESTRELAS
 
-        botao.addEventListener('click', () => {
+    document.querySelectorAll('.botao-favorito')
+        .forEach(botao => {
 
-            alternarFavorito(
-                botao.dataset.favoriteId
-            );
+            botao.addEventListener('click', () => {
+
+                alternarFavorito(
+                    botao.dataset.favoriteId
+                );
+
+            });
 
         });
 
-    });
+    // ATUALIZAR FAVORITOS ENTRE ABAS DO NAVEGADOR
 
     window.addEventListener(
         'storage',
@@ -906,7 +894,7 @@
 </script>
 
 <!-- ==========================================
-     JAVASCRIPT DO CARRINHO
+     JAVASCRIPT DO CARRINHO ORIGINAL
 ========================================== -->
 
 <script src="/js/carrinho-loja.js" defer></script>

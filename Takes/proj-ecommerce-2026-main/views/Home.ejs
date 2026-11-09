@@ -4,64 +4,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="theme-color" content="#101118">
     <title>TAKES | Faça arte.</title>
+    <meta name="description" content="TAKES — um espaço para roteiros, criadores e novas histórias. Faça arte, encontre projetos e descubra o audiovisual.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="/css/home.css">
 </head>
 
-<body>
-    <main class="hero">
+<body class="home-page">
 
-        <header class="navbar">
+    <main>
 
-            <a href="#precos" class="nav-link">
-                Preços
-            </a>
+        <!-- BANNER PRINCIPAL -->
+        <section class="home-hero" id="inicio">
 
-            <a href="#criadores" class="nav-link">
-                Criadores
-            </a>
+            <div class="home-hero-photo"></div>
+            <div class="home-hero-shade"></div>
 
-            <a href="/" class="logo">
-                TAKES
-            </a>
+            <!-- MENU SUPERIOR -->
+            <header class="home-header">
 
-            <!-- LOGIN HITCHCOCK -->
-            <a href="/login" class="nav-link">
-                Log in
-            </a>
+                <nav class="home-nav">
 
-            <a href="/cadastro" class="nav-register">
-                Registrar
-            </a>
+                    <div class="home-nav-side home-nav-side--left">
 
-        </header>
+                        <a class="home-nav-pill" href="#recursos">
+                            Preços
+                        </a>
 
-        <section class="hero-content">
+                        <a class="home-nav-pill home-nav-search" href="/roteiros">
+                            <i class="bi bi-search"></i>
+                            <span>Busque um Criador</span>
+                        </a>
 
-            <p class="eyebrow">
-                DO ROTEIRO AO RESULTADO
-            </p>
+                    </div>
 
-            <h1>Faça arte.</h1>
+                    <a class="home-brand" href="/">
+                        TAKES
+                        <i class="bi bi-camera-reels-fill"></i>
+                    </a>
 
-            <p class="description">
-                Encontre histórias, explore ideias e dê vida
-                aos seus próximos projetos.
-            </p>
+                    <div class="home-nav-side home-nav-side--right">
 
-            <a href="/login" class="cta-button">
-                Começar agora ↗
-            </a>
+                        <a class="home-nav-pill" href="/login">
+                            Log in
+                        </a>
+
+                        <a class="home-nav-pill home-nav-pill--white" href="/login">
+                            Registrar
+                        </a>
+
+                    </div>
+
+                </nav>
+
+            </header>
+
+            <!-- TEXTO DO BANNER -->
+            <div class="home-hero-copy home-container">
+
+                <h1>Faça arte<span>.</span></h1>
+                <p>Do roteiro ao resultado</p>
+
+            </div>
 
         </section>
 
-        <footer class="hero-footer">
-            <span>TAKES © 2026</span>
-            <span>CRIE. EXPERIMENTE. INSPIRE.</span>
-        </footer>
+        <!-- CRIADOR É UMA CARREIRA -->
+        <section class="home-career" id="criadores">
+
+            <div class="home-container home-career-inner">
+
+                <span class="home-eyebrow home-eyebrow--muted">
+                    PARA CRIADORES
+                </span>
+
+                <h2>
+                    Criador<br>
+                    é uma carreira<span>.</span>
+                </h2>
+
+                <!-- CARDS DECORATIVOS -->
+                <div class="home-creator-wall">
+
+                    <div class="home-creator-ghost">
+                        <small>Foto do Criador 1</small>
+                        <span>Adicione sua imagem</span>
+                    </div>
+
+                    <div class="home-creator-ghost">
+                        <small>Foto do Criador 2</small>
+                        <span>Adicione sua imagem</span>
+                    </div>
+
+                    <div class="home-creator-ghost">
+                        <small>Foto do Criador 3</small>
+                        <span>Adicione sua imagem</span>
+                    </div>
+
+                    <div class="home-creator-ghost">
+                        <small>Foto do Criador 4</small>
+                        <span>Adicione sua imagem</span>
+                    </div>
+
+                    <div class="home-creator-ghost">
+                        <small>Foto do Criador 5</small>
+                        <span>Adicione sua imagem</span>
+                    </div>
+
+                    <div class="home-creator-ghost">
+                        <small>Foto do Criador 6</small>
+                        <span>Adicione sua imagem</span>
+                    </div>
+
+                </div>
+
+                <a class="home-discover" href="#criatividade">
+                    <i class="bi bi-arrow-down"></i>
+                    Descubra
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- CRIATIVIDADE -->
+        <section class="home-creativity" id="criatividade">
+
+            <div class="home-container">
+
+                <h2>Criatividade</h2>
+
+                <div class="home-creativity-grid" id="recursos">
+
+                    <!-- LADO ESQUERDO -->
+                    <div class="home-creativity-intro">
+
+                        <span class="home-eyebrow home-eyebrow--blue">
+                            MAIS FORMAS DE CRESCER
+                        </span>
+
+                        <h3>
+                            Controle total sobre<br>
+                            sua criação.
+                        </h3>
+
+                        <a class="home-dark-button" href="/login">
+                            Criar conta grátis
+                        </a>
+
+                    </div>
+
+                    <!-- BENEFÍCIOS -->
+                    <div class="home-benefits">
+
+                        <article class="home-benefit">
+
+                            <span class="home-benefit-icon home-benefit-icon--blue">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </span>
+
+                            <div>
+                                <h4>Publique nos seus termos</h4>
+
+                                <p>
+                                    Defina o seu ritmo. Suba projetos,
+                                    roteiros e bastidores sem algoritmo
+                                    decidindo por você.
+                                </p>
+                            </div>
+
+                        </article>
+
+                        <article class="home-benefit">
+
+                            <span class="home-benefit-icon home-benefit-icon--dark">
+                                <i class="bi bi-people"></i>
+                            </span>
+
+                            <div>
+                                <h4>Construa sua comunidade</h4>
+
+                                <p>
+                                    Conecte fãs e colaboradores diretamente.
+                                    Comentários, exclusivos e acesso privilegiado.
+                                </p>
+                            </div>
+
+                        </article>
+
+                        <article class="home-benefit">
+
+                            <span class="home-benefit-icon home-benefit-icon--blue">
+                                <i class="bi bi-currency-dollar"></i>
+                            </span>
+
+                            <div>
+                                <h4>Monetize sem complicação</h4>
+
+                                <p>
+                                    Apresente seus roteiros e encontre
+                                    oportunidades para transformar seu
+                                    trabalho em renda.
+                                </p>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CRIADORES EM EVIDÊNCIA -->
+        <section class="home-featured" id="destaques">
+
+            <div class="home-container">
+
+                <div class="home-featured-heading">
+
+                    <div>
+
+                        <span class="home-eyebrow home-eyebrow--blue">
+                            CRIADORES EM EVIDÊNCIA
+                        </span>
+
+                        <h2>Arte que inspira.</h2>
+
+                    </div>
+
+                    <a class="home-outline-button" href="/roteiros">
+                        Ver todos
+                        <i class="bi bi-arrow-up-right"></i>
+                    </a>
+
+                </div>
+
+                <!-- CARDS DOS CRIADORES -->
+                <div class="home-featured-grid">
+
+                    <a class="home-feature-card home-feature-card--one" href="/roteiros">
+
+                        <div class="home-feature-card-text">
+                            <strong>Lucas Ferreira</strong>
+                            <span>Diretor &amp; Roteirista · São Paulo</span>
+                        </div>
+
+                    </a>
+
+                    <a class="home-feature-card home-feature-card--two" href="/roteiros">
+
+                        <div class="home-feature-card-text">
+                            <strong>Marina Oliveira</strong>
+                            <span>Editora &amp; Motion Designer · Rio de Janeiro</span>
+                        </div>
+
+                    </a>
+
+                    <a class="home-feature-card home-feature-card--three" href="/roteiros">
+
+                        <div class="home-feature-card-text">
+                            <strong>Pedro Alves</strong>
+                            <span>Documentarista · Belo Horizonte</span>
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- COMEÇAR A CRIAR -->
+        <section class="home-cta" id="sobre">
+
+            <div class="home-container home-cta-inner">
+
+                <h2>Comece a criar hoje.</h2>
+
+                <p>
+                    Encontre sua comunidade e transforme suas
+                    ideias em projetos reais com o Takes.
+                </p>
+
+                <div class="home-cta-actions">
+
+                    <a class="home-dark-button" href="/login">
+                        Criar conta grátis
+                    </a>
+
+                    <a class="home-light-button" href="/roteiros">
+                        Explorar roteiros
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </main>
+
+    <!-- RODAPÉ -->
+    <footer class="home-footer">
+
+        <div class="home-container">
+
+            <div class="home-footer-grid">
+
+                <!-- TAKES -->
+                <div class="home-footer-about">
+
+                    <a href="/" class="home-footer-logo">
+                        TAKES
+                    </a>
+
+                    <p>
+                        Publique nos seus termos.<br>
+                        Crie sua comunidade.<br>
+                        Monetize seu trabalho.<br>
+                        Takes para empresas.<br>
+                        Aplicativo mobile.
+                    </p>
+
+                </div>
+
+                <!-- PREÇOS -->
+                <div class="home-footer-column">
+
+                    <h3>Preços</h3>
+
+                    <a href="#recursos">Takes começa gratuito</a>
+                    <a href="#recursos">Para criadores</a>
+                    <a href="#recursos">Monetização</a>
+
+                </div>
+
+                <!-- RECURSOS -->
+                <div class="home-footer-column">
+
+                    <h3>Recursos</h3>
+
+                    <a href="/roteiros">Explorar roteiros</a>
+                    <a href="#criadores">Takes para Criadores</a>
+                    <a href="#destaques">Criadores em destaque</a>
+                    <a href="/perfil">Meu perfil</a>
+
+                </div>
+
+                <!-- EMPRESA -->
+                <div class="home-footer-column">
+
+                    <h3>Empresa</h3>
+
+                    <a href="#sobre">Sobre nós</a>
+                    <a href="#criatividade">O que oferecemos</a>
+                    <a href="#inicio">Voltar ao início</a>
+
+                </div>
+
+            </div>
+
+            <div class="home-footer-bottom">
+
+                <div class="home-social">
+
+                    <span title="Instagram em breve">
+                        <i class="bi bi-instagram"></i>
+                    </span>
+
+                    <span title="YouTube em breve">
+                        <i class="bi bi-youtube"></i>
+                    </span>
+
+                    <span title="LinkedIn em breve">
+                        <i class="bi bi-linkedin"></i>
+                    </span>
+
+                </div>
+
+                <p>
+                    © <span id="home-year">2026</span> Takes.
+                    Projeto desenvolvido no IFC Campus Videira.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+  
+<script>
+    document.getElementById('home-year').textContent =
+        new Date().getFullYear();
+</script>
+
+<script src="/js/home.js" defer></script>
+
 </body>
 </html>
+
