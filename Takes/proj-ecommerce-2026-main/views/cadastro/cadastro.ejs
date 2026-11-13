@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Criar conta | TAKES</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="stylesheet" href="/css/cadastro.css">
+</head>
+
+<body>
+
+<header class="topo">
+
+    <a href="/" class="marca">
+        TAKES<span>.</span>
+    </a>
+
+    <a href="/" class="voltar">
+        ← Voltar para a Home
+    </a>
+
+</header>
+
+<main class="pagina">
+
+    <div class="introducao">
+
+        <span class="etiqueta">
+            TAKES • SUA HISTÓRIA COMEÇA AQUI
+        </span>
+
+        <h1>
+            Crie sua conta<span>.</span>
+        </h1>
+
+        <p>
+            Faça parte de uma plataforma que conecta
+            quem cria histórias a quem deseja
+            transformá-las em realidade.
+        </p>
+
+    </div>
+
+    <section class="cartao">
+
+        <% if (sucesso) { %>
+
+            <div class="mensagem sucesso" role="status">
+
+                Conta cadastrada com sucesso!
+
+                Seu cadastro foi salvo no banco de dados.
+
+                O login real será implementado
+                na próxima etapa.
+
+            </div>
+
+            <a href="/" class="botao">
+                Voltar para a página inicial
+            </a>
+
+        <% } else { %>
+
+            <% if (erro) { %>
+
+                <div class="mensagem erro" role="alert">
+                    <%= erro %>
+                </div>
+
+            <% } %>
+
+            <form action="/cadastro" method="POST">
+
+                <!-- NOME -->
+
+                <label for="nome">
+                    Nome completo *
+                </label>
+
+                <input
+                    id="nome"
+                    name="nome"
+                    type="text"
+                    placeholder="Seu nome completo"
+                    minlength="3"
+                    maxlength="100"
+                    autocomplete="name"
+                    required
+                    value="<%= dados.nome || '' %>"
+                >
+
+                <!-- EMAIL E USUÁRIO -->
+
+                <div class="duas-colunas">
+
+                    <div>
+
+                        <label for="email">
+                            E-mail *
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="voce@exemplo.com"
+                            maxlength="254"
+                            autocomplete="email"
+                            required
+                            value="<%= dados.email || '' %>"
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label for="usuario">
+                            Nome de usuário *
+                        </label>
+
+                        <input
+                            id="usuario"
+                            name="usuario"
+                            type="text"
+                            placeholder="ex.: criador.takes"
+                            minlength="3"
+                            maxlength="30"
+                            pattern="[a-zA-Z0-9._-]{3,30}"
+                            autocomplete="username"
+                            required
+                            value="<%= dados.usuario || '' %>"
+                        >
+
+                    </div>
+
+                </div>
+
+                <!-- TIPO DE PERFIL -->
+
+                <fieldset>
+
+                    <legend>
+                        Como você quer usar o TAKES? *
+                    </legend>
+
+                    <div class="perfis">
+
+                        <label class="perfil">
+
+                            <input
+                                type="radio"
+                                name="tipo"
+                                value="roteirista"
+                                required
+                                <%= dados.tipo === 'roteirista'
+                                    ? 'checked'
+                                    : '' %>
+                            >
+
+                            <span>
+
+                                <strong>
+                                    ✍️ Roteirista
+                                </strong>
+
+                                <small>
+                                    Quero publicar e oferecer
+                                    meus roteiros.
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                        <label class="perfil">
+
+                            <input
+                                type="radio"
+                                name="tipo"
+                                value="empresa"
+                                required
+                                <%= dados.tipo === 'empresa'
+                                    ? 'checked'
+                                    : '' %>
+                            >
+
+                            <span>
+
+                                <strong>
+                                    🎬 Empresa / Empreendedor
+                                </strong>
+
+                                <small>
+                                    Quero descobrir e adquirir
+                                    projetos.
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </fieldset>
+
+                <!-- SENHAS -->
+
+                <div class="duas-colunas">
+
+                    <div>
+
+                        <label for="senha">
+                            Senha *
+                        </label>
+
+                        <input
+                            id="senha"
+                            name="senha"
+                            type="password"
+                            minlength="8"
+                            maxlength="128"
+                            placeholder="Mínimo de 8 caracteres"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label for="confirmar">
+                            Confirmar senha *
+                        </label>
+
+                        <input
+                            id="confirmar"
+                            name="confirmar"
+                            type="password"
+                            minlength="8"
+                            maxlength="128"
+                            placeholder="Repita a senha"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <p class="aviso">
+
+                    Suas informações serão armazenadas
+                    no SQLite do projeto.
+
+                    A senha não será salva em texto puro.
+
+                </p>
+
+                <button type="submit" class="botao">
+                    Criar minha conta →
+                </button>
+
+            </form>
+
+        <% } %>
+
+    </section>
+
+</main>
+
+</body>
+</html>

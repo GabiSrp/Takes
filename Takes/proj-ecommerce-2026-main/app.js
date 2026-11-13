@@ -20,6 +20,8 @@ app.use(express.json());
 // Arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('./rotas/usuarios'));
+
 // ==========================================
 // PÁGINA INICIAL
 // ==========================================
